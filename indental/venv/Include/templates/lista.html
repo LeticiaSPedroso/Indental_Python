@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lista</title>
+</head>
+<body>
+    <table border = 1>
+        <tr>
+            <th> ID </th>
+            <th> TELEFONE </th>
+            <th> TIPO </th>
+            <th> DDD </th>
+            <th> ID_PESSOA </th>
+        </tr>
+        {% for value in var %}
+            <tr>
+                <td> {{ value[0] }} </td>
+                <td> {{ value[1] }} </td>
+                <td> {{ value[2] }} </td>
+                <td> {{ value[3] }} </td>
+                <td> {{ value[4] }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
