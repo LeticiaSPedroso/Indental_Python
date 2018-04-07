@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lista funcionario</title>
+</head>
+<body>
+    <form action="/visualizaFuncionario" method="POST">
+        <table border = 1>
+            <tr>
+                <th> ID </th>
+                <th> NOME </th>
+                <th> SOBRENOME </th>
+                <th> CPF </th>
+                <th> VISUALIZAR </th>
+            </tr>
+            {% for value in var %}
+                <tr>
+                    <td> {{ value[0] }} </td>
+                    <td> {{ value[14] }} </td>
+                    <td> {{ value[15] }} </td>
+                    <td> {{ value[19] }} </td>
+                    <td>
+                        <input type="hidden" id="txtIdFuncionario" name="txtIdFuncionario" value="{{ value[0] }}">
+                        <input type="submit" id="txtComando" name="txtComando" value="VISUALIZAR">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
