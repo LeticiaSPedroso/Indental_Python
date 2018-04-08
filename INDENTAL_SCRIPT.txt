@@ -1,0 +1,200 @@
+use indentalBD;
+
+/*----------------------------------*/ 
+
+CREATE TABLE `usuario` (
+  `id` int(19) NOT NULL,
+  `dataCadastro` date NOT NULL,
+  `status` int(1) NOT NULL,
+  `login` varchar(40) NOT NULL,
+  `senha` varchar(40) NOT NULL,
+  `nivelAcesso` varchar(19) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `usuario`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+/*----------------------------------*/ 
+
+CREATE TABLE `pessoa` (
+  `id` int(19) NOT NULL,
+  `dataCadastro` date NOT NULL,
+  `status` int(1) NOT NULL,
+  `nome` varchar(40) NOT NULL,
+  `sobrenome` varchar(40) NOT NULL,
+  `dataNascimento` date NULL,
+  `sexo` varchar(1) NULL,
+  `rg` varchar(13) NULL,
+  `cpf` varchar(15) NULL,
+  `email` varchar(80) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `pessoa`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+/*----------------------------------*/ 
+
+CREATE TABLE `funcionario` (
+  `id` int(19) NOT NULL,
+  `idPessoa` int(19) NOT NULL,
+  `salario` decimal(11,2) NULL,
+  `cargo` int(19) NOT NULL,
+  `idUsuario` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idPessoa) REFERENCES pessoa(id),
+  FOREIGN KEY (idUsuario) REFERENCES usuario(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `funcionario`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+  
+/*----------------------------------*/ 
+
+CREATE TABLE `paciente` (
+  `id` int(19) NOT NULL,
+  `idResponsavel` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idResponsavel) REFERENCES pessoa(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `paciente`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+/*----------------------------------*/
+
+CREATE TABLE `endereco` (
+  `id` int(19) NOT NULL,
+  `cep` varchar(12) NOT NULL,
+  `numero` varchar(12) NOT NULL,
+  `rua` varchar(40) NOT NULL,
+  `bairro` varchar(40) NOT NULL,
+  `cidade` varchar(40) NOT NULL,
+  `estado` varchar(2) NOT NULL,
+  `idPessoa` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idPessoa) REFERENCES pessoa(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `endereco`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+/*----------------------------------*/
+
+CREATE TABLE `telefone` (
+  `id` int(19) NOT NULL,
+  `numero` varchar(15) NOT NULL,
+  `tipo` int(1) NOT NULL,
+  `ddd` varchar(5) NOT NULL,
+  `idPessoa` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idPessoa) REFERENCES pessoa(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `telefone`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+ 
+/*----------------------------------*/
+
+CREATE TABLE `especialidade` (
+  `id` int(19) NOT NULL,
+  `descricao` varchar(40) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `especialidade`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+
+/*----------------------------------*/
+
+CREATE TABLE `dentista` (
+  `id` int(19) NOT NULL,
+  `cro` varchar(40) NOT NULL,
+  `idPessoa` int(19) NOT NULL,
+  `idUsuario` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idPessoa) REFERENCES pessoa(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dentista`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ 
+
+/*----------------------------------*/
+
+CREATE TABLE `tratamento` (
+  `id` int(19) NOT NULL,
+  `descricao` varchar(40) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `tratamento`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+/*----------------------------------*/
+
+CREATE TABLE `procedimento` (
+  `id` int(19) NOT NULL,
+  `descricao` varchar(40) NOT NULL,
+  `idTratamento` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idTratamento) REFERENCES tratamento(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `procedimento`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+/*----------------------------------*/
+  
+ CREATE TABLE `consulta` (
+  `id` int(19) NOT NULL,
+  `dataHora` date NOT NULL,
+  `idDentista` int(19) NOT NULL,
+  `idPaciente` int(19) NOT NULL,
+  `idTratamento` int(19) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idDentista) REFERENCES dentista(id),
+  FOREIGN KEY (idPaciente) REFERENCES paciente(id),
+  FOREIGN KEY (idTratamento) REFERENCES tratamento(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+ALTER TABLE `consulta`
+  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
+/*----------------------------------*/
+
+create table especialidade(
+	
+	id int(19) not null AUTO_INCREMENT,
+    
+	nome varchar(50) not null,
+    
+	valor double not null,
+    
+	status int not null,
+	
+	PRIMARY KEY (id)
+
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+ALTER TABLE indentalbd.especialidade AUTO_INCREMENT=1;
+
+/*----------------------------------*/
+
+
+Adiciona a foreign key de especialidade de dentista
+
+ALTER TABLE dentista ADD idEspecialidade int UNSIGNED NOT NULL DEFAULT 0;
+
+
+
+ALTER TABLE dentista ADD CONSTRAINT fk_idEspecialidade FOREIGN KEY (idEspecialidade) REFERENCES especialidade(id);
+
+/*---------------------------------*/
+

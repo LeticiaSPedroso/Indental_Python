@@ -190,3 +190,86 @@ class EnderecoDAO:
                         "bairro = '"+bairro+"',cidade = '"+cidade+"',estado = '"+estado+"'" +
                         "where id = '"+id+"'")
         return
+
+
+class DentistaDAO:
+    variavel = 'Daphne'
+    usuario = 'admin'
+    password = 'admin'
+
+    def __init__(self):
+        return
+
+    def funcao(self):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.dentista as d " +
+                "inner join indentalbd.especialidade esp on (esp.id = d.idEspecialidade)" +
+                "inner join indentalbd.usuario u on (u.id = d.idUsuario)" +
+                "inner join indentalbd.pessoa p on (p.id = d.idPessoa)" +
+                "inner join indentalbd.endereco e on (e.idPessoa = d.idPessoa)" +
+                "inner join indentalbd.telefone t on (t.idPessoa = d.idPessoa)")
+        data = cursor.fetchall()
+        return data
+
+    def busca(self, id):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.dentista as d " +
+                "inner join indentalbd.especialidade esp on (esp.id = d.idEspecialidade)" +
+                "inner join indentalbd.usuario u on (u.id = d.idUsuario)" +
+                "inner join indentalbd.pessoa p on (p.id = d.idPessoa)" +
+                "inner join indentalbd.endereco e on (e.idPessoa = d.idPessoa)" +
+                "inner join indentalbd.telefone t on (t.idPessoa = d.idPessoa)" +
+                "where d.id = " + id)
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, cro, idPessoa, idUsuario, idEspecialidade):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("insert into indentalbd.dentista (cro, idPessoa, idUsuario, idEspecialidade)" +
+                       "values('" + cro + "', " + idPessoa + ", " + idUsuario + ", " + idEspecialidade + ")")
+        return
+
+    def atualiza(self, cro, idEspecialidade, id):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute(
+            "update indentalbd.dentista set cro = '" + cro + "', idEspecialidade = " + idEspecialidade +
+            " where id = " + id)
+        return
+
+
+class EspecialidadeDAO:
+    variavel = 'Daphne'
+    usuario = 'admin'
+    password = 'admin'
+
+    def __init__(self):
+        return
+
+    def funcao(self):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.especialidade")
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, nome, valor):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("insert into indentalbd.especialidade (nome, valor, status)" +
+                       "values('" + nome + "', " + valor + ", 1)")
+        id = cursor.lastrowid
+        # print('id gerado: '+str(id))
+        cursor.close()
+        return str(id)
+
+    def atualiza(self, nome, valor, status, id):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute(
+            "update indentalbd.especialidade set nome = '" + nome + "', valor = " + valor + ", status = '"+status+"'," +
+            "where id = '" + id + "'")
+        return

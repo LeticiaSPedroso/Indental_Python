@@ -46,7 +46,6 @@ def listaFuncionario():
 
 @app.route("/cadastroFuncionario", methods=['POST'])
 def cadastroFuncionario():
-
     nome = request.form['txtNome']
     sobrenome = request.form['txtSobrenome']
     rg = request.form['txtRg']
@@ -73,23 +72,20 @@ def cadastroFuncionario():
     ddd = request.form['txtDdd']
     comando = request.form['btnComando']
 
-    print('Botao Comando: ' + comando)
-
     clsusuario = UsuarioDAO()
     clspessoa = PessoaDAO()
     clsfuncionario = FuncionarioDAO()
     clsendereco = EnderecoDAO()
     clstelefone = NomeClasse()
 
-    idUsuario = 1
-    idPessoa = 1
-
     idUsuario = clsusuario.salvar(login, senha)
     idPessoa = clspessoa.salvar(nome, sobrenome, rg, cpf, sexo, dtnascimento, email)
     clsfuncionario.salvar(cargo, salario, idUsuario, idPessoa)
     clsendereco.salvar(rua, numero, bairro, cidade, estado, cep, idPessoa)
     clstelefone.salvar(telefone, tipo, ddd, idPessoa)
-    return render_template('hello.html')
+
+    retorno = clsfuncionario.funcao()
+    return render_template('listaFuncionario.html', var = retorno)
 
 
 @app.route("/insertFuncionario")
@@ -112,7 +108,6 @@ def atualizaFuncionario():
     idFuncionario = request.form['txtIdFuncionario']
     idEndereco = request.form['txtIdEndereco']
     idTelefone= request.form['txtIdTelefone']
-    print(idUser)
 
     nome = request.form['txtNome']
     sobrenome = request.form['txtSobrenome']
@@ -138,18 +133,14 @@ def atualizaFuncionario():
     telefone = request.form['txtTelefone']
     tipo = request.form['txtTipo']
     ddd = request.form['txtDdd']
-    comando = request.form['btnComando']
 
-    print('Botao Comando: ' + comando)
+    comando = request.form['btnComando']
 
     clsusuario = UsuarioDAO()
     clspessoa = PessoaDAO()
     clsfuncionario = FuncionarioDAO()
     clsendereco = EnderecoDAO()
     clstelefone = NomeClasse()
-
-    idUsuario = 1
-    idPessoa = 1
 
     clsusuario.atualiza(login, senha, idUser)
     clspessoa.atualiza(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
@@ -159,6 +150,130 @@ def atualizaFuncionario():
 
     retorno = clsfuncionario.funcao()
     return render_template('listaFuncionario.html', var=retorno)
+
+
+
+@app.route("/listaDentistas")
+def lista_dentista():
+    clsdentista = DentistaDAO()
+    retorno = clsdentista.funcao()
+    return render_template('listaDentistas.html', var=retorno)
+
+
+@app.route("/cadastroDentista")
+def cadastro_dentista():
+    return render_template('cadastroDentista.html')
+
+
+@app.route("/insertDentista", methods=['POST'])
+def cadastraDentista():
+    nome = request.form['txtNome']
+    sobrenome = request.form['txtSobrenome']
+    rg = request.form['txtRg']
+    cpf = request.form['txtCpf']
+    sexo = request.form['txtSexo']
+    dtnascimento = request.form['txtDataNascimento']
+    email = request.form['txtEmail']
+
+    especialidade = request.form['txtEspecialidade']
+    valor_especialidade = request.form['txtValorEspecialidade']
+
+    cro = request.form['txtCro']
+
+    login = request.form['txtLogin']
+    senha = request.form['txtSenha']
+
+    rua = request.form['txtRua']
+    numero = request.form['txtNumero']
+    bairro = request.form['txtBairro']
+    cidade = request.form['txtCidade']
+    estado = request.form['txtEstado']
+    cep = request.form['txtCep']
+
+    telefone = request.form['txtTelefone']
+    tipo = request.form['txtTipo']
+    ddd = request.form['txtDdd']
+
+    comando = request.form['btnComando']
+
+    clsusuario = UsuarioDAO()
+    clspessoa = PessoaDAO()
+    clsdentista = DentistaDAO()
+    clsespecialidade = EspecialidadeDAO()
+    clsendereco = EnderecoDAO()
+    clstelefone = NomeClasse()
+
+    idUsuario = clsusuario.salvar(login, senha)
+    idPessoa = clspessoa.salvar(nome, sobrenome, rg, cpf, sexo, dtnascimento, email)
+    idEspecialidade = clsespecialidade.salvar(especialidade, valor_especialidade)
+    clsdentista.salvar(cro, idPessoa, idUsuario, idEspecialidade)
+    clsendereco.salvar(rua, numero, bairro, cidade, estado, cep, idPessoa)
+    clstelefone.salvar(telefone, tipo, ddd, idPessoa)
+
+    retorno = clsdentista.funcao()
+    return render_template('listaDentistas.html', var=retorno)
+
+
+
+@app.route("/visualizaDentista", methods=['POST'])
+def visualizaDentista():
+    clsdentista= DentistaDAO()
+    id = request.form['txtIdDentista']
+    print(id)
+    retorno = clsdentista.busca(id)
+    return render_template('visualizaDentista.html', var = retorno)
+
+
+@app.route("/atualizaDentista", methods=['POST'])
+def atualizaDentista():
+    idUser = request.form['txtIdUsuario']
+    idPes = request.form['txtIdPessoa']
+    idDentista = request.form['txtIdDentista']
+    idEspecialidade = request.form['txtIdEspecialidade']
+    idEndereco = request.form['txtIdEndereco']
+    idTelefone= request.form['txtIdTelefone']
+
+    nome = request.form['txtNome']
+    sobrenome = request.form['txtSobrenome']
+    rg = request.form['txtRg']
+    cpf = request.form['txtCpf']
+    sexo = request.form['txtSexo']
+    dtnascimento = request.form['txtDataNascimento']
+    email = request.form['txtEmail']
+
+    cro = request.form['txtCro']
+
+    login = request.form['txtLogin']
+    senha = request.form['txtSenha']
+
+    rua = request.form['txtRua']
+    numero = request.form['txtNumero']
+    bairro = request.form['txtBairro']
+    cidade = request.form['txtCidade']
+    estado = request.form['txtEstado']
+    cep = request.form['txtCep']
+
+    telefone = request.form['txtTelefone']
+    tipo = request.form['txtTipo']
+    ddd = request.form['txtDdd']
+    comando = request.form['btnComando']
+
+    print('Botao Comando: ' + comando)
+
+    clsusuario = UsuarioDAO()
+    clspessoa = PessoaDAO()
+    clsdentista = DentistaDAO()
+    clsendereco = EnderecoDAO()
+    clstelefone = NomeClasse()
+
+    clsusuario.atualiza(login, senha, idUser)
+    clspessoa.atualiza(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
+    clsdentista.atualiza(cro, idEspecialidade, idDentista)
+    clsendereco.atualiza(rua, numero, bairro, cidade, estado, cep, idEndereco)
+    clstelefone.atualiza(telefone, tipo, ddd, idTelefone)
+
+    retorno = clsdentista.funcao()
+    return render_template('listaDentistas.html', var=retorno)
 
 
 app.run()
