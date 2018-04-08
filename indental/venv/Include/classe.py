@@ -4,8 +4,8 @@ import MySQLdb
 class NomeClasse:
 
     variavel = 'Daphne'
-    usuario = 'root'
-    password = 'pitbul12'
+    usuario = 'admin'
+    password = 'admin'
 
     def __init__(self):
         return
@@ -42,8 +42,8 @@ class NomeClasse:
 class UsuarioDAO:
 
     variavel = 'Daphne'
-    usuario = 'root'
-    password = 'pitbul12'
+    usuario = 'admin'
+    password = 'admin'
 
     def __init__(self):
         return
@@ -75,8 +75,8 @@ class UsuarioDAO:
 class PessoaDAO:
 
     variavel = 'Daphne'
-    usuario = 'root'
-    password = 'pitbul12'
+    usuario = 'admin'
+    password = 'admin'
 
     def __init__(self):
         return
@@ -115,8 +115,8 @@ class PessoaDAO:
 
 class FuncionarioDAO:
         variavel = 'Daphne'
-        usuario = 'root'
-        password = 'pitbul12'
+        usuario = 'admin'
+        password = 'admin'
 
         def __init__(self):
             return
@@ -162,8 +162,8 @@ class FuncionarioDAO:
 class EnderecoDAO:
 
     variavel = 'Daphne'
-    usuario = 'root'
-    password = 'pitbul12'
+    usuario = 'admin'
+    password = 'admin'
 
     def __init__(self):
         return
