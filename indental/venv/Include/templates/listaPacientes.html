@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lista paciente</title>
+    <script>
+        function insertId(id)
+        {
+            document.getElementById('txtIdPaciente').value = id
+        }
+    </script>
+</head>
+<body>
+    <form action="/visualizaPaciente" method="POST">
+        <table border = 1>
+            <tr>
+                <th> ID </th>
+                <th> NOME </th>
+                <th> SOBRENOME </th>
+                <th> CPF </th>
+                <th> VISUALIZAR </th>
+            </tr>
+            {% for value in var %}
+                <tr>
+                    <td> {{ value[0] }} </td>
+                    <td> {{ value[6] }} </td>
+                    <td> {{ value[7] }} </td>
+                    <td> {{ value[12] }} </td>
+                    <td>
+                        <input type="hidden" id="txtIdPaciente" name="txtIdPaciente" value="{{ value[0] }}">
+                        <input type="submit" id="txtComando" name="txtComando" value="VISUALIZAR"
+                               onclick="insertId({{ value[0] }})">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>

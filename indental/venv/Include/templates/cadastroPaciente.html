@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cadastro paciente</title>
+</head>
+<body>
+    <form action="/insertPaciente" method="POST">
+        <table border = 1>
+            <tr>
+                <th> NOME </th>
+                <td> <input type="text" id="txtNome" name="txtNome" > </td>
+                <th> SOBRENOME </th>
+                <td> <input type="text" id="txtSobrenome" name="txtSobrenome"> </td>
+                <th> RG </th>
+                <td> <input type="text" id="txtRg" name="txtRg"> </td>
+            </tr>
+
+            <tr>
+                <th> CPF </th>
+                <td> <input type="text" id="txtCpf" name="txtCpf"> </td>
+                <th> SEXO </th>
+                <td> <input type="text" id="txtSexo" name="txtSexo"> </td>
+                <th> DATA NASCIMENTO </th>
+                <td> <input type="text" id="txtDataNascimento" name="txtDataNascimento"> </td>
+                <th> EMAIL </th>
+                <td> <input type="text" id="txtEmail" name="txtEmail"> </td>
+            </tr>
+
+            <tr>
+                <th> Responsavel </th>
+                <td> <input type="text" id="txtIdReponsavel" name="txtIdReponsavel"> </td>
+            </tr>
+          </table>
+
+            <table border = 1>
+            <tr>
+                <th> RUA </th>
+                <td> <input type="text" id="txtRua" name="txtRua"> </td>
+                <th> NUMERO </th>
+                <td> <input type="text" id="txtNumero" name="txtNumero"> </td>
+                <th> BAIRRO </th>
+                <td> <input type="text" id="txtBairro" name="txtBairro"> </td>
+                <th> CIDADE </th>
+                <td> <input type="text" id="txtCidade" name="txtCidade"> </td>
+                <th> ESTADO </th>
+                <td> <input type="text" id="txtEstado" name="txtEstado"> </td>
+                <th> CEP </th>
+                <td> <input type="text" id="txtCep" name="txtCep"> </td>
+            </tr>
+          </table>
+
+            <table border = 1>
+            <tr>
+                <th> TELEFONE </th>
+                <td> <input type="text" id="txtTelefone" name="txtTelefone">
+                </td>
+                <th> TIPO </th>
+                <td> <input type="text" id="txtTipo" name="txtTipo"> </td>
+                <th> DDD </th>
+                <td> <input type="text" id="txtDdd" name="txtDdd"> </td>
+            </tr>
+          </table>
+        <input type="submit" id="btnComando" name="btnComando" value="SALVAR">
+    </form>
+</body>
+</html>

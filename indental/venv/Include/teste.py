@@ -258,8 +258,6 @@ def atualizaDentista():
     ddd = request.form['txtDdd']
     comando = request.form['btnComando']
 
-    print('Botao Comando: ' + comando)
-
     clsusuario = UsuarioDAO()
     clspessoa = PessoaDAO()
     clsdentista = DentistaDAO()
@@ -274,6 +272,110 @@ def atualizaDentista():
 
     retorno = clsdentista.funcao()
     return render_template('listaDentistas.html', var=retorno)
+
+
+
+@app.route("/listaPacientes")
+def listaPacientes():
+    clspaciente = PacienteDAO()
+    retorno = clspaciente.funcao()
+    return render_template('listaPacientes.html', var=retorno)
+
+
+@app.route("/cadastroPaciente")
+def cadastroPaciente():
+    return render_template('cadastroPaciente.html')
+
+
+@app.route("/insertPaciente", methods=['POST'])
+def insertPaciente():
+
+    nome = request.form['txtNome']
+    sobrenome = request.form['txtSobrenome']
+    rg = request.form['txtRg']
+    cpf = request.form['txtCpf']
+    sexo = request.form['txtSexo']
+    dtnascimento = request.form['txtDataNascimento']
+    email = request.form['txtEmail']
+
+    idResponsavel = request.form['txtIdReponsavel']
+
+    rua = request.form['txtRua']
+    numero = request.form['txtNumero']
+    bairro = request.form['txtBairro']
+    cidade = request.form['txtCidade']
+    estado = request.form['txtEstado']
+    cep = request.form['txtCep']
+
+    telefone = request.form['txtTelefone']
+    tipo = request.form['txtTipo']
+    ddd = request.form['txtDdd']
+
+    comando = request.form['btnComando']
+
+    clspessoa = PessoaDAO()
+    clspaciente = PacienteDAO()
+    clsendereco = EnderecoDAO()
+    clstelefone = NomeClasse()
+
+    idPessoa = clspessoa.salvar(nome, sobrenome, rg, cpf, sexo, dtnascimento, email)
+    clspaciente.salvar(idResponsavel, idPessoa)
+    clsendereco.salvar(rua, numero, bairro, cidade, estado, cep, idPessoa)
+    clstelefone.salvar(telefone, tipo, ddd, idPessoa)
+
+    retorno = clspaciente.funcao()
+    return render_template('listaPacientes.html', var=retorno)
+
+
+
+@app.route("/visualizaPaciente", methods=['POST'])
+def visualizaPaciente():
+    clspaciente = PacienteDAO()
+    id = request.form['txtIdPaciente']
+    retorno = clspaciente.busca(id)
+    return render_template('visualizaPaciente.html', var = retorno)
+
+
+@app.route("/atualizaPaciente", methods=['POST'])
+def atualizaPaciente():
+    idPes = request.form['txtIdPessoa']
+    idResponsavel = request.form['txtIdResponsavel']
+    idPaciente = request.form['txtIdPaciente']
+    idEndereco = request.form['txtIdEndereco']
+    idTelefone= request.form['txtIdTelefone']
+
+    nome = request.form['txtNome']
+    sobrenome = request.form['txtSobrenome']
+    rg = request.form['txtRg']
+    cpf = request.form['txtCpf']
+    sexo = request.form['txtSexo']
+    dtnascimento = request.form['txtDataNascimento']
+    email = request.form['txtEmail']
+
+    rua = request.form['txtRua']
+    numero = request.form['txtNumero']
+    bairro = request.form['txtBairro']
+    cidade = request.form['txtCidade']
+    estado = request.form['txtEstado']
+    cep = request.form['txtCep']
+
+    telefone = request.form['txtTelefone']
+    tipo = request.form['txtTipo']
+    ddd = request.form['txtDdd']
+    comando = request.form['btnComando']
+
+    clspessoa = PessoaDAO()
+    clspaciente = PacienteDAO()
+    clsendereco = EnderecoDAO()
+    clstelefone = NomeClasse()
+
+    clspessoa.atualiza(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
+    clspaciente.atualiza(idResponsavel, idPaciente)
+    clsendereco.atualiza(rua, numero, bairro, cidade, estado, cep, idEndereco)
+    clstelefone.atualiza(telefone, tipo, ddd, idTelefone)
+
+    retorno = clspaciente.funcao()
+    return render_template('listaPacientes.html', var=retorno)
 
 
 app.run()

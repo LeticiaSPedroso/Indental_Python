@@ -273,3 +273,52 @@ class EspecialidadeDAO:
             "update indentalbd.especialidade set nome = '" + nome + "', valor = " + valor + ", status = '"+status+"'," +
             "where id = '" + id + "'")
         return
+
+
+class PacienteDAO:
+    variavel = 'Daphne'
+    usuario = 'admin'
+    password = 'admin'
+
+    def __init__(self):
+        return
+
+    def funcao(self):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.paciente as pa " +
+                "inner join indentalbd.pessoa p on (p.id = pa.idPessoa)" +
+                "inner join indentalbd.endereco e on (e.idPessoa = pa.idPessoa)" +
+                "inner join indentalbd.telefone t on (t.idPessoa = pa.idPessoa)")
+        data = cursor.fetchall()
+        return data
+
+    def busca(self, id):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.paciente as pa " +
+                       "inner join indentalbd.pessoa p on (p.id = pa.idPessoa)" +
+                       "inner join indentalbd.endereco e on (e.idPessoa = pa.idPessoa)" +
+                       "inner join indentalbd.telefone t on (t.idPessoa = pa.idPessoa)" +
+                       "where pa.id = " + id)
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, idResponsavel, idPessoa):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("insert into indentalbd.paciente (idResponsavel, idPessoa)" +
+                       "values(" + idResponsavel + ", " + idPessoa  + ")")
+        id = cursor.lastrowid
+        # print('id gerado: '+str(id))
+        cursor.close()
+        return str(id)
+
+    def atualiza(self, idResponsavel, id):
+        #vai atualizar?
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute(
+            "update indentalbd.paciente set idResponsavel = " + idResponsavel +
+            " where id = '" + id + "'")
+        return

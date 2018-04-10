@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>visualiza paciente</title>
+</head>
+<body>
+    <form action="/atualizaPaciente" method="POST">
+        {% for value in var %}
+        <table border = 1>
+            <tr>
+                <th> NOME </th>
+                <td> <input type="text" id="txtNome" name="txtNome" value="{{ value[6] }}"> </td>
+                <th> SOBRENOME </th>
+                <td> <input type="text" id="txtSobrenome" name="txtSobrenome" value="{{ value[7] }}"> </td>
+                <th> RG </th>
+                <td> <input type="text" id="txtRg" name="txtRg" value="{{ value[10] }}"> </td>
+            </tr>
+
+            <tr>
+                <th> CPF </th>
+                <td> <input type="text" id="txtCpf" name="txtCpf" value="{{ value[11] }}"> </td>
+                <th> SEXO </th>
+                <td> <input type="text" id="txtSexo" name="txtSexo" value="{{ value[9] }}"> </td>
+                <th> DATA NASCIMENTO </th>
+                <td> <input type="text" id="txtDataNascimento" name="txtDataNascimento" value="{{ value[8] }}"> </td>
+                <th> EMAIL </th>
+                <td> <input type="text" id="txtEmail" name="txtEmail" value="{{ value[12] }}"> </td>
+            </tr>
+
+            <tr>
+                <th> RESPONSAVEL </th>
+                <td> <input type="text" id="txtIdResponsavel" name="txtIdResponsavel" value="{{ value[1] }}"> </td>
+            </tr>
+          </table>
+
+            <table border = 1>
+            <tr>
+                <th> RUA </th>
+                <td> <input type="text" id="txtRua" name="txtRua" value="{{ value[16] }}"> </td>
+                <th> NUMERO </th>
+                <td> <input type="text" id="txtNumero" name="txtNumero" value="{{ value[15] }}"> </td>
+                <th> BAIRRO </th>
+                <td> <input type="text" id="txtBairro" name="txtBairro" value="{{ value[17] }}"> </td>
+                <th> CIDADE </th>
+                <td> <input type="text" id="txtCidade" name="txtCidade" value="{{ value[18] }}"> </td>
+                <th> ESTADO </th>
+                <td> <input type="text" id="txtEstado" name="txtEstado" value="{{ value[19] }}"> </td>
+                <th> CEP </th>
+                <td> <input type="text" id="txtCep" name="txtCep" value="{{ value[14] }}"> </td>
+            </tr>
+          </table>
+
+            <table border = 1>
+            <tr>
+                <th> TELEFONE </th>
+                <td> <input type="text" id="txtTelefone" name="txtTelefone" value="{{ value[22] }}">
+                </td>
+                <th> TIPO </th>
+                <td> <input type="text" id="txtTipo" name="txtTipo" value="{{ value[23] }}"> </td>
+                <th> DDD </th>
+                <td> <input type="text" id="txtDdd" name="txtDdd" value="{{ value[24] }}"> </td>
+            </tr>
+          </table>
+
+        <input type="hidden" id="txtIdPessoa" name="txtIdPessoa" value="{{ value[2] }}">
+        <input type="hidden" id="txtIdPaciente" name="txtIdPaciente" value="{{ value[0] }}">
+        <input type="hidden" id="txtIdEndereco" name="txtIdEndereco" value="{{ value[13] }}">
+        <input type="hidden" id="txtIdTelefone" name="txtIdTelefone" value="{{ value[21] }}">
+
+        <input type="submit" id="btnComando" name="btnComando" value="SALVAR">
+        <input type="submit" id="btnComandoDelete" name="btnComando" value="DELETAR">
+        {% endfor %}
+    </form>
+</body>
+</html>
