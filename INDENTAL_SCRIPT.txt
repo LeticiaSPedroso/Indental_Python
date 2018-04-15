@@ -95,19 +95,6 @@ CREATE TABLE `telefone` (
 
 ALTER TABLE `telefone`
   MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-  
- 
-/*----------------------------------*/
-
-CREATE TABLE `especialidade` (
-  `id` int(19) NOT NULL,
-  `descricao` varchar(40) NOT NULL,
-  PRIMARY KEY (id)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-ALTER TABLE `especialidade`
-  MODIFY `id` int(19) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
 
 /*----------------------------------*/
 
@@ -188,7 +175,7 @@ ALTER TABLE indentalbd.especialidade AUTO_INCREMENT=1;
 /*----------------------------------*/
 
 
-Adiciona a foreign key de especialidade de dentista
+/*Adiciona a foreign key de especialidade de dentista*/
 
 ALTER TABLE dentista ADD idEspecialidade int UNSIGNED NOT NULL DEFAULT 0;
 
