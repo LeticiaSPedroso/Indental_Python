@@ -222,6 +222,15 @@ class DentistaDAO:
         data = cursor.fetchall()
         return data
 
+    def buscaCpf(self, cpfDentista):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT d.id FROM indentalbd.dentista as d " +
+                        "inner join indentalbd.pessoa p on (p.id = d.idPessoa)" +
+                        "where p.cpf = " + cpfDentista)
+        data = cursor.fetchone()
+        return data[0]
+
     def salvar(self, cro, idPessoa, idUsuario, idEspecialidade):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
@@ -314,4 +323,145 @@ class PacienteDAO:
         cursor.execute(
             "update " + self.base + "." + self.tabela + " set idResponsavel = " + idResponsavel +
             " where id = '" + id + "'")
+        return
+
+class ProcedimentoDAO:
+
+    def __init__(self):
+        return
+
+    def funcao(self):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.procedimento as p ")
+        data = cursor.fetchall()
+        return data
+
+    def busca(self, id):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.procedimento as p " +
+                       "where p.id = " + id)
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, descricao, idTratamento):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("insert into indentalbd.procedimento (descricao, idTratamento)" +
+                       "values('" + descricao + "', " + idTratamento  + ")")
+        #id = cursor.lastrowid
+        # print('id gerado: '+str(id))
+        cursor.close()
+        return
+
+    def atualiza(self, descricao, idTratamento, id):
+        #vai atualizar?
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute(
+            "update indentalbd.procedimento set descricao = '" + descricao + "', idTratamento = " + idTratamento +
+            " where id = '" + id + "'")
+        return
+
+
+class TratamentoDAO:
+
+    def __init__(self):
+        return
+
+    def funcao(self):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.tratamento as t" +
+                    "inner join indentalbd.procedimento p on (t.id = p.idTratamento)")
+        data = cursor.fetchall()
+        return data
+
+    def busca(self, id):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.tratamento as t " +
+                        "inner join indentalbd.procedimento p on (t.id = p.idTratamento)"
+                       "where t.id = " + id)
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, descricao):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("insert into indentalbd.tratamento (descricao)" +
+                       "values('" + descricao + "')")
+        id = cursor.lastrowid
+        # print('id gerado: '+str(id))
+        cursor.close()
+        return str(id)
+
+    def atualiza(self, descricao, idTratamento, id):
+        #vai atualizar?
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute(
+            "update indentalbd.tratamento set descricao = '" + descricao + "', idTratamento = " + idTratamento +
+            " where id = '" + id + "'")
+        return
+
+class HorarioPacienteDAO:
+
+    def __init__(self):
+        return
+
+    def lista(self):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.horario_paciente")
+        data = cursor.fetchall()
+        return data
+
+    def busca(self):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.horario_paciente")
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, idPaciente, idDentista, dataHorario, valor, status):
+        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
+        cursor = db.cursor()
+        cursor.execute("insert into indentalbd.horario_paciente (idPaciente, idDentista, dataHorario, valor, status)" +
+                       "values("+idPaciente+", "+idDentista+", STR_TO_DATE('"+dataHorario+"','%d/%m/%Y'), " +
+                        valor + ",'"+status+"')")
+        return
+
+class HorarioDentistaDAO:
+
+    def __init__(self):
+        return
+
+    def lista(self):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.horario_dentista as hd " +
+                "inner join indentalbd.dentista d on d.id = hd.idDentista " +
+                "inner join indentalbd.pessoa p on p.id = d.idPessoa")
+        data = cursor.fetchall()
+        return data
+
+    def busca(self, idDentista, dataHorarioInicio, dataHorarioFim, cadeira, status):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM indentalbd.horario_dentista" +
+                       "where idDentista = " + idDentista + ' and cadeira = ' + cadeira + ' and status = ' + status +
+                       ' and dataHorario = ' + dataHorario)
+        data = cursor.fetchall()
+        return data
+
+    def salvar(self, idDentista, dataHorarioInicio, dataHorarioFim, cadeira, status):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute(
+            "insert into indentalbd.horario_dentista (idDentista, dataHorarioInicio, dataHorarioTermino, cadeira, " +
+            "status)" +
+            "values(" + str(idDentista) + ", STR_TO_DATE('" + str(dataHorarioInicio) + "','%d/%m/%Y %H:%i:%s'), " +
+            "STR_TO_DATE('" + str(dataHorarioFim) + "','%d/%m/%Y %H:%i:%s'), " + str(cadeira) + ", " + str(status) +")")
         return

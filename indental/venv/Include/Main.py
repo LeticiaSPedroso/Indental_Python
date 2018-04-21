@@ -377,4 +377,41 @@ def atualizaPaciente():
     return render_template('listaPacientes.html', var=retorno)
 
 
+@app.route("/agendaDentista")
+def agenda():
+    clsdentista = DentistaDAO()
+    clshorario_dentista = HorarioDentistaDAO()
+    retorno = clsdentista.listar()
+    horariosDentista  = clshorario_dentista.lista()
+    return render_template('agendaDentista.html', horarios=horariosDentista, var=retorno)
+
+
+@app.route("/salvaHorarioDentista", methods=['POST'])
+def salvaHorarioDentista():
+    print('veio')
+    cpfDentista = request.form['selectDentista']
+    print(cpfDentista)
+    cadeira = request.form['txtCadeira']
+    print(cadeira)
+    horario_inicio = request.form['txtHorarioInicio']
+    print(horario_inicio)
+    horario_fim = request.form['txtHorarioFim']
+    print(horario_fim)
+
+    comando = request.form['btnComando']
+
+    daohorario_dentista = HorarioDentistaDAO()
+    daodentista = DentistaDAO()
+    idDentista = daodentista.buscaCpf(cpfDentista)
+    print(idDentista)
+    daohorario_dentista.salvar(idDentista, horario_inicio, horario_fim, cadeira, '0')
+
+
+    clsdentista = DentistaDAO()
+    clshorario_dentista = HorarioDentistaDAO()
+    retorno = clsdentista.listar()
+    horariosDentista  = clshorario_dentista.lista()
+    return render_template('agendaDentista.html', horarios=horariosDentista, var=retorno)
+
+
 app.run(port=4996)
