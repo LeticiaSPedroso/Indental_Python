@@ -185,3 +185,18 @@ ALTER TABLE dentista ADD CONSTRAINT fk_idEspecialidade FOREIGN KEY (idEspecialid
 
 /*---------------------------------*/
 
+create table horario_dentista(
+	id int(19) not null AUTO_INCREMENT,
+    idDentista int null,
+    dataHorarioInicio datetime null,
+    dataHorarioTermino datetime null,
+    cadeira int null,
+    status int not null,
+	PRIMARY KEY (id),
+    FOREIGN KEY (idDentista) REFERENCES dentista(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+ALTER TABLE indentalbd.horario_dentista AUTO_INCREMENT=1;
+
