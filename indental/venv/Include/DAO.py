@@ -10,7 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-        self.password = 'admin'
+        self.password = 'root'
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
@@ -78,6 +78,12 @@ class UsuarioDAO:
         cursor.execute("update " + self.base + "." + self.tabela + " set login = '"+login+"', senha = '"+senha+"'" +
                         "where id = '" + id + "'")
         return
+
+    def logar(self, user, senha):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM " + self.base + "." + self.tabela + " WHERE login = '"+user+"' AND senha = '"+senha+"'")
+        return cursor.fetchall()
 
 class PessoaDAO:
 

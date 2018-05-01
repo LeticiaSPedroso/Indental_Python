@@ -6,6 +6,9 @@
 </head>
 <body>
     <form action="/cadastro" method="POST">
+        {% if session['flagLogado'] %}
+            <p>Bem vindo</p>
+        {% endif %}
         <table border = 1>
             <tr>
                 <th> TELEFONE </th>

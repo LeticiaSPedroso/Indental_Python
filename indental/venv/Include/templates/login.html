@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    {% block body %}
+    {% if session['flagLogado'] %}
+    <p>Ja esta logado</p>
+    {% else %}
+    <form action="/logar" method="POST">
+        <table border = 1>
+            <tr>
+                <th> User </th>
+                <td> <input type="username" name="user" placeholder="User"> </td>
+                <th> Senha </th>
+                <td> <input type="password" name="senha" placeholder="Senha"> </td>
+            </tr>
+        </table>
+        <input type="submit" value="LOGAR">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </form>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>
