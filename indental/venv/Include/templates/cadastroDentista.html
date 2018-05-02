@@ -2,79 +2,325 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>cadastro dentista</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+
+
 </head>
-<body>
-    <form action="/insertDentista" method="POST">
-        <table border = 1>
-            <tr>
-                <th> NOME </th>
-                <td> <input type="text" id="txtNome" name="txtNome" > </td>
-                <th> SOBRENOME </th>
-                <td> <input type="text" id="txtSobrenome" name="txtSobrenome"> </td>
-                <th> RG </th>
-                <td> <input type="text" id="txtRg" name="txtRg"> </td>
-            </tr>
+<body id="page-top">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button"
+                data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
 
-            <tr>
-                <th> CPF </th>
-                <td> <input type="text" id="txtCpf" name="txtCpf"> </td>
-                <th> SEXO </th>
-                <td> <input type="text" id="txtSexo" name="txtSexo"> </td>
-                <th> DATA NASCIMENTO </th>
-                <td> <input type="text" id="txtDataNascimento" name="txtDataNascimento"> </td>
-                <th> EMAIL </th>
-                <td> <input type="text" id="txtEmail" name="txtEmail"> </td>
-            </tr>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Pacientes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Cadastro</a>
+                        <a class="dropdown-item" href="#">Odontograma</a>
+                        <a class="dropdown-item" href="#">Busca</a>
+                    </div>
+                </li>
 
-            <tr>
-                <th> CRO </th>
-                <td> <input type="text" id="txtCro" name="txtCro"> </td>
-                <th> ESPECIALIDADE </th>
-                <td> <input type="text" id="txtEspecialidade" name="txtEspecialidade"> </td>
-                <th> VALOR </th>
-                <td> <input type="text" id="txtValorEspecialidade" name="txtValorEspecialidade"></td>
-            </tr>
-          </table>
 
-            <table border = 1>
-            <tr>
-                <th> LOGIN </th>
-                <td> <input type="text" id="txtLogin" name="txtLogin"> </td>
-                <th> SENHA </th>
-                <td> <input type="text" id="txtSenha" name="txtSenha"> </td>
-            </tr>
-          </table>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Funcionários</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Agenda</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Especialidades
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <br>
+    <br>
+</div>
 
-            <table border = 1>
-            <tr>
-                <th> RUA </th>
-                <td> <input type="text" id="txtRua" name="txtRua"> </td>
-                <th> NUMERO </th>
-                <td> <input type="text" id="txtNumero" name="txtNumero"> </td>
-                <th> BAIRRO </th>
-                <td> <input type="text" id="txtBairro" name="txtBairro"> </td>
-                <th> CIDADE </th>
-                <td> <input type="text" id="txtCidade" name="txtCidade"> </td>
-                <th> ESTADO </th>
-                <td> <input type="text" id="txtEstado" name="txtEstado"> </td>
-                <th> CEP </th>
-                <td> <input type="text" id="txtCep" name="txtCep"> </td>
-            </tr>
-          </table>
 
-            <table border = 1>
-            <tr>
-                <th> TELEFONE </th>
-                <td> <input type="text" id="txtTelefone" name="txtTelefone">
-                </td>
-                <th> TIPO </th>
-                <td> <input type="text" id="txtTipo" name="txtTipo"> </td>
-                <th> DDD </th>
-                <td> <input type="text" id="txtDdd" name="txtDdd"> </td>
-            </tr>
-          </table>
-        <input type="submit" id="btnComando" name="btnComando" value="SALVAR">
-    </form>
+<section id="contact">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto col-md-12 col-md-offset-1">
+
+                <div class="form-row">
+                    <h3 class="text-center text-uppercase text-secondary mb-4">Cadastro de Dentista</h3>
+                </div>
+                <br>
+                <form action="/insertDentista" method="POST" name="sentMessage" id="contactForm"
+                      novalidate="novalidate">
+                    <h4 class="  text-secondary mb-4">Informações Pessoais</h4>
+                    <hr>
+                    <br>
+                    <div class="form-row">
+                        <div class=" form-group col-md-6">
+                            <input class="form-control" id="txtNome" name="txtNome" type="text" placeholder="Name"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class=" form-group col-md-6">
+                            <input class="form-control" id="txtSobrenome" name="txtSobrenome" type="text"
+                                   placeholder="Sobrenome" required="required"
+                                   data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class=" form-group col-md-4 ">
+                            <input class="form-control" id="txtRg" name="txtRg" type="text" placeholder="RG"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class=" form-group col-md-2 ">
+                        </div>
+                        <div class=" form-group col-md-4 ">
+                            <input class="form-control" id="txtCpf" name="txtCpf" type="text" placeholder="CPF"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class=" form-group col-md-4">
+                            <select name="txtSexo" id="txtSexo" class="form-control">
+                                <option selected>Sexo:</option>
+                                <option>Feminino</option>
+                                <option>Masculino</option>
+                            </select>
+                        </div>
+                        <div class=" form-group col-md-2 ">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input class="form-control" id="txtDataNascimento" name="txtDataNascimento" type="date"
+                                   placeholder="Data de Nascimento" required="required"
+                                   data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <input class="form-control" id="txtDdd" name="txtDdd" type="text" placeholder="DDD"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input class="form-control" id="txtTelefone" name="txtTelefone" type="text"
+                                   placeholder="Telefone" required="required"
+                                   data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <select name="txtTipo" id="txtTipo" class="form-control">
+                                <option selected>Tipo:</option>
+                                <option>Pessoal</option>
+                                <option>Empresarial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h4 class="  text-secondary mb-4">Endereço</h4>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <input class="form-control" id="txtCep" name="txtCep" type="text" placeholder="CEP"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <input class="form-control" id="txtRua" name="txtRua" type="text" placeholder="Rua"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <input class="form-control" id="txtNumero" name="txtNumero" type="text" placeholder="Número"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class=" form-group col-md-2 ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="txtBairro" name="txtBairro" type="text" placeholder="Bairro"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="txtCidade" name="txtCidade" type="text"
+                                   placeholder="Cidade"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <select name="txtEstado" id="txtEstado" class="form-control">
+                                <option selected>Estado:</option>
+                                <option> AC</option>
+                                <option>AL</option>
+                                <option>AP</option>
+                                <option>AM</option>
+                                <option>BA</option>
+                                <option>CE</option>
+                                <option>DF</option>
+                                <option>ES</option>
+                                <option>GO</option>
+                                <option>MA</option>
+                                <option>MT</option>
+                                <option>MS</option>
+                                <option>MG</option>
+                                <option>PA</option>
+                                <option>PB</option>
+                                <option>PR</option>
+                                <option>PE</option>
+                                <option>PI</option>
+                                <option>RJ</option>
+                                <option>RN</option>
+                                <option>RS</option>
+                                <option>RO</option>
+                                <option>RR</option>
+                                <option>SC</option>
+                                <option>SP</option>
+                                <option>SE</option>
+                                <option>TO</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <h4 class="  text-secondary mb-4">Informações Profissionais</h4>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="txtCro" name="txtCro" type="text" placeholder="CRO"
+                                   required="required"
+                                   data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="txtEspecialidade" name="txtEspecialidade"
+                                   type="text"
+                                   placeholder="Especialidade" required="required"
+                                   data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <input class="form-control" id="txtValor" name="txtValor" type="text"
+                                   placeholder="Valor"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <h4 class="  text-secondary mb-4">Finalizar Cadastro</h4>
+                    <hr>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <input class="form-control" id="txtEmail" name="txtEmail" type="text"
+                                   placeholder="Email"
+                                   required="required"
+                                   data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="txtLogin" name="txtLogin" type="text"
+                                   placeholder="Login"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" id="txtSenha" name="txtSenha" type="text"
+                                   placeholder="Senha"
+                                   required="required" data-validation-required-message="Por favor digite o nome.">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+
+                            <button type="submit" class="btn btn-primary btn-x" id="btnComando" name="btnComando">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<!-- Contact Form JavaScript -->
+<script src="js/jqBootstrapValidation.js"></script>
+<script src="js/contact_me.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/freelancer.min.js"></script>
+
+
 </body>
 </html>
