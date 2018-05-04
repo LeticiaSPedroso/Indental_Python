@@ -2,13 +2,10 @@
 
 from templates import *
 from DAO import *
-<<<<<<< HEAD
 from datetime import datetime
 from flask import Flask, render_template, request
-=======
 from flask import Flask, flash, render_template, request, session
 import os
->>>>>>> df25b0f75cdcf4b886fe46a095574e4e3f8f65ca
 
 app = Flask(__name__)
 
