@@ -2,8 +2,13 @@
 
 from templates import *
 from DAO import *
+<<<<<<< HEAD
 from datetime import datetime
 from flask import Flask, render_template, request
+=======
+from flask import Flask, flash, render_template, request, session
+import os
+>>>>>>> df25b0f75cdcf4b886fe46a095574e4e3f8f65ca
 
 app = Flask(__name__)
 
@@ -17,6 +22,27 @@ def hello_world():
     DAO = TelefoneDAO()
     retorno = DAO.listar()
     return render_template('hello.html', var = retorno)
+
+@app.route("/login")
+def login():
+    return render_template('login.html')
+
+@app.route('/logar', methods=['POST'])
+def logar():
+    DAO = UsuarioDAO()
+
+    login = request.form['user']
+    senha = request.form['senha']
+
+    retorno = DAO.logar(login, senha)
+    if len(retorno) > 0:
+        session['flagLogado'] = True
+        session['user'] = login
+        session['senha'] = senha
+        return render_template('hello.html', var=retorno)
+    else:
+        flash('Usuario não cadastrado ou senha incorreta!')
+        return render_template('login.html', var=retorno)
 
 @app.route("/listaTelefone")
 def lista():
@@ -497,5 +523,5 @@ def alteraHorarioDentista():
     horariosDentista  = clshorario_dentista.lista()
     return render_template('agendaDentista.html', horarios=horariosDentista, var=retorno)
 
-
+app.secret_key = os.urandom(12)
 app.run(port=4996)
