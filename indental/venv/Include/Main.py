@@ -2,9 +2,14 @@
 
 from templates import *
 from DAO import *
+from datetime import datetime
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+
+time = ['08:00:00', '08:30:00', '09:00:00', '09:30:00', '10:00:00', '10:30:00', '11:00:00', '11:30:00', '12:00:00',
+        '12:30:00', '13:00:00', '13:30:00', '14:00:00', '14:30:00', '15:00:00', '15:30:00', '16:00:00', '16:30:00',
+        '17:00:00', '17:30:00', '18:00:00', '18:30:00', '19:00:00', '19:30:00', '20:00:00']
 
 
 @app.route("/")
@@ -377,36 +382,115 @@ def atualizaPaciente():
     return render_template('listaPacientes.html', var=retorno)
 
 
-@app.route("/agendaDentista")
+@app.route("/calendario")
+def calendario():
+    return render_template('calendario.html')
+
+
+@app.route("/agendaDentista", methods=['POST'])
 def agenda():
+    data = request.form['txtData']
+    cadeira = request.form['txtCadeira']
+
     clsdentista = DentistaDAO()
     clshorario_dentista = HorarioDentistaDAO()
+
     retorno = clsdentista.listar()
-    horariosDentista  = clshorario_dentista.lista()
-    return render_template('agendaDentista.html', horarios=horariosDentista, var=retorno)
+    horarios = clshorario_dentista.lista(data, cadeira)
+
+    print(len(horarios))
+
+    w, h = 500, 500;
+    Matrix = [[0 for x in range(w)] for y in range(h)]
+    inicio = 0
+    houveMudanca = 0
+    i = 0
+
+    while i <= 24:
+        houveMudanca = 0
+        inicio = 1
+
+        for h in horarios:
+            #iniciou o algum com esse tempo?
+            if (h[7] == time[i]):
+                indexInicio = time.index(h[7])
+                indexFim = time.index(h[9])
+                horaInicio = datetime_object = datetime.strptime(h[7], '%H:%M:%S')
+                horaFim = datetime_object = datetime.strptime(h[9], '%H:%M:%S')
+                diferenca = (horaFim - horaInicio)
+                houveMudanca = 1
+
+                i = time.index(time[i])
+                while h[9] != time[i]:
+                    #time[i] = t
+                    Matrix[i][0] = time[i]
+                    Matrix[i][1] = h
+                    print(Matrix[i][0])
+                    print(Matrix[i][1])
+                    #print('hora' + str(time[i]))
+                    i = i + 1
+                    #time.index(i)
+                    #time[index][1] = h
+
+        if houveMudanca == 0:
+            Matrix[i][0] = time[i]
+            Matrix[i][1] = ''
+            print(Matrix[i][0])
+            print(Matrix[i][1])
+            i = i + 1
+
+
+    return render_template('agendaDentista.html', horarios=Matrix, var=retorno, cadeira=cadeira, data=data)
 
 
 @app.route("/salvaHorarioDentista", methods=['POST'])
 def salvaHorarioDentista():
-    print('veio')
+    data = request.form['txtDataAgenda']
+    print(data)
     cpfDentista = request.form['selectDentista']
-    print(cpfDentista)
     cadeira = request.form['txtCadeira']
-    print(cadeira)
-    horario_inicio = request.form['txtHorarioInicio']
-    print(horario_inicio)
-    horario_fim = request.form['txtHorarioFim']
-    print(horario_fim)
+    horario_inicio = data + ' ' + request.form['txtHorarioInicio']
+    horario_fim = data + ' ' + request.form['txtHorarioFim']
 
     comando = request.form['btnComando']
 
     daohorario_dentista = HorarioDentistaDAO()
     daodentista = DentistaDAO()
     idDentista = daodentista.buscaCpf(cpfDentista)
-    print(idDentista)
+    
+    #já existe o mesmo alguem nesta cadeira neste horario?
+    #horarioReservado = daohorario_dentista.busca('', horario_inicio, horario_fim, cadeira, '0')
+    
+    #if horarioReservado is not None:
+        #return "<h2>Horário já reservado</h2>"
+
     daohorario_dentista.salvar(idDentista, horario_inicio, horario_fim, cadeira, '0')
 
+    # lista os horários de novo e retorna a agenda
+    clsdentista = DentistaDAO()
+    clshorario_dentista = HorarioDentistaDAO()
+    retorno = clsdentista.listar()
+    horarios = clshorario_dentista.lista(data, cadeira)
+    return render_template('agendaDentista.html', horarios=horarios, var=retorno, cadeira=cadeira, data=data, time=time)
 
+
+@app.route("/alteraHorarioDentista", methods=['POST'])
+def alteraHorarioDentista():
+    cpfDentista = request.form['selectDentistaEditar']
+    cadeira = request.form['selectCadeira']
+    horario_inicio = request.form['txtHorarioInicioEditar']
+    horario_fim = request.form['txtHorarioFimEditar']
+    status = request.form['txtStatus']
+    id = request.form['txtId']
+
+    comando = request.form['btnComando']
+
+    daohorario_dentista = HorarioDentistaDAO()
+    daodentista = DentistaDAO()
+    idDentista = daodentista.buscaCpf(cpfDentista)
+    daohorario_dentista.altera(idDentista, horario_inicio, horario_fim, cadeira, status, id)
+
+    # lista os horários de novo e retorna a agenda
     clsdentista = DentistaDAO()
     clshorario_dentista = HorarioDentistaDAO()
     retorno = clsdentista.listar()

@@ -1,221 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>agenda</title>
-    <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
-    <link href="https://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"> </link>
+<html>
+	<head>
+		<link rel="stylesheet" href= "{{ url_for('static',filename='css/style.css') }}">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-        YUI().use(
-        'aui-scheduler',
-        function(Y) {
-        var events = [
-          {% for h in horarios %}
-          {
-            content: '{{h[14]}}',
-            disabled: true,
-            endDate: new Date('{{h[2]}}'),
-            meeting: true,
-            startDate: new Date('{{h[3]}}')
-          },
-          {% endfor %}
-        ];
+		<script>
+			// Abre a modal de salvar horário
+			function modalSalvar()
+			{
+				$("#myModalSalvar").modal();
+			}
 
-        var agendaView = new Y.SchedulerAgendaView();
-        var dayView = new Y.SchedulerDayView();
-        var weekView = new Y.SchedulerWeekView();
-        var monthView = new Y.SchedulerMonthView();
+			// Abre a modal de excluir horário
+			function modalExcluir(horario)
+			{
+				$("#myModalExcluir").modal();
+			}
 
-        var eventRecorder = new Y.SchedulerEventRecorder({
-            on: {
-                save: function(event) {
-                    var dateInicio = new Date(this.get('startDate'));
-                    var dateFim = new Date(this.get('endDate'));
+			// Abre a modal de alterar horário
+			function modalAlterar(horario)
+			{
+				console.log(horario);
+				$("#myModalAlterar").modal();
+			}
 
-                    dateInicio = dateInicio.toLocaleString("pt-br");
-                    dateFim = dateFim.toLocaleString("pt-br");
+			// verifica os horários salvos
+			function verificaHorario()
+			{
+				var horarioInicio = document.getElementsByName('txtHorarioInicio');
+				var horarioFim = document.getElementsByName('txtHorarioFim');
 
-                    $("#txtHorarioInicio").val(dateInicio);
-                    $("#txtHorarioFim").val(dateFim);
-                    $("#selectDentista option[value=" +this.getContentNode().val()+ "]").attr('selected','selected');
-
-                    $("#myModalSalvar").modal();
-                    console.log('Save Event:' + this.getClearStartDate() + ',end: ' + this.getClearStartDate() +
-                                    ' --- ' + this.getContentNode().val());
-                },
-                edit: function(event) {
-                    var dateInicio = new Date(this.get('startDate'));
-                    var dateFim = new Date(this.get('endDate'));
-
-                    dateInicio = dateInicio.toLocaleString("pt-br");
-                    dateFim = dateFim.toLocaleString("pt-br");
-
-                    {%for h in horarios%}
-                        if(this.getContentNode().val() == '{{h[14]}}')
-                        {
-                            console.log(dateInicio + ', ' + '{{h[2]}}');
-                            // achou o dentista
-                            if(dateInicio == '{{h[2]}}')
-                            {
-                                // achou a data
-                                console.log('foi');
-                            }
-                        }
-                    {%endfor%}
-                    $("#txtContetd").val(this.getContentNode().val());
-                    $("#myModalEditar").modal();
-                    console.log('Edit Event:' + event.description+ ' --- ' + this.getContentNode().val());
-                },
-                delete: function(event) {
-                    $("#myModalExcluir").modal();
-                    console.log('Delete Event:' + this.isNew() + ' --- ' + this.getContentNode().val());
-        // Note: The cancel event seems to be buggy and occurs at the wrong times, so I commented it out.
-        //      },
-        //      cancel: function(event) {
-        //          alert('Cancel Event:' + this.isNew() + ' --- ' + this.getContentNode().val());
-                }
-            }
-        });
-
-        new Y.Scheduler(
-          {
-            activeView: weekView,
-            boundingBox: '#myScheduler',
-            date: new Date(2013, 3, 25),
-            eventRecorder: eventRecorder,
-            items: events,
-            render: true,
-            views: [dayView, weekView, monthView, agendaView]
-          }
-        );
-      }
-    );
-    </script>
-</head>
-<body>
-<div class="container">
-  <h2>Agenda Dantista</h2>
-  <!-- Modal -->
-  <div class="modal fade" id="myModalSalvar" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-          <form action="/salvaHorarioDentista" method="POST">
-            <div class="modal-body">
-                <p>Salvar Dentista</p> <p>Dentista</p>
-                <select id = "selectDentista" name = "selectDentista">
-                {% for value in var %}
-                    <option id="txtDentista" name="txtDentista" value="{{ value[23] }}"> {{ value[18] }} </option>
-                {% endfor %}
-                </select>
-                <p>Cadeira</p>
-                <select id="txtCadeira" name="txtCadeira">
-                    <option value="1">Cadeira 1</option>
-                    <option value="2">Cadeira 2</option>
-                    <option value="3">Cadeira 3</option>
-                    <option value="4">Cadeira 4</option>
-                </select>
-                <p>Horario Início</p>
-                <input type="text" id="txtHorarioInicio" name="txtHorarioInicio">
-                <p>Horário Fim</p>
-                <input type="text" id="txtHorarioFim" name="txtHorarioFim">
-                <input type="submit" id="btnComando"
-                       name="btnComando" value="SALVAR"  class="btn btn-default">
-            </div>
-          </form>
-      </div>
-
-    </div>
-  </div>
-
-    <!-- Modal -->
-  <div class="modal fade" id="myModalEditar" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-          <form action="/salvaHorario" method="POST">
-            <div class="modal-body">
-                <p>Editar Horario</p>
-                <p>Id</p>
-                <input type="text" id="txtId" name="txtId">
-                <p id="txtContetd" name="txtContetd">
-                <p>Dentista</p>
-                <select>
-                {% for value in var %}
-                    <option id="txtDentista" name="txtDentista" value="{{ value[23] }}"> {{ value[18] }} </option>
-                {% endfor%}
-                </select>
-                <p>Cadeira</p>
-                <select>
-                    <option id="txtCadeira" name="txtCadeira" value="1">Cadeira 1</option>
-                    <option id="txtCadeira" name="txtCadeira" value="2">Cadeira 2</option>
-                    <option id="txtCadeira" name="txtCadeira" value="3">Cadeira 3</option>
-                    <option id="txtCadeira" name="txtCadeira" value="4">Cadeira 4</option>
-                </select>
-                <p>Horario Início</p>
-                <input type="text" id="txtHorarioInicio" name="txtHorarioInicio">
-                <p>Horário Fim</p>
-                <input type="text" id="txtHorarioFim" name="txtHorarioFim">
-                <input type="submit" id="btnComando"
-                       name="btnComando" value="EDITAR"  class="btn btn-default">
-            </div>
-          </form>
-      </div>
-
-    </div>
-  </div>
-
-    <!-- Modal -->
-  <div class="modal fade" id="myModalExcluir" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-          <form action="/salvaHorario" method="POST">
-            <div class="modal-body">
-                <p>Excluir Paciente</p>
-                <p>Paciente</p>
-                <input type="text" id="txtCpfPaciente" name="txtCpfPaciente">
-                <p>Dentista</p>
-                <input type="text" id="txtDentista" name="txtDentista">
-                <p>Horario Início</p>
-                <input type="text" id="txtHorarioInicio" name="txtHorarioInicio">
-                <p>Horário Fim</p>
-                <input type="text" id="txtHorarioFim" name="txtHorarioFim">
-                <input type="submit" id="btnComando"
-                       name="btnComando" value="EXCLUIR"  class="btn btn-default">
-            </div>
-          </form>
-      </div>
-
-    </div>
-  </div>
-    <!-- calendario -->
-    <center>
-        <div id="wrapper" style="width:80%;">
-            <div id="myScheduler"></div>
-        </div>
-    </center>
-
-</div>
-</body>
+				{% for horario in horarios %}
+					/*if ({{ horario }} >= horarioInicio)
+					{
+					}*/
+				{% endfor %}
+			}
+		</script>
+	</head>
+		<h2>Agenda da Cadeira: {{ cadeira }}</h2>
+		<h2>Dia: {{ data }}</h2>
+		<input type="date" id="txtData" name="txtData" value="{{ data }}">
+		<input type="button" id="btnModalSalvar" name="btnModalSalvar" onclick="modalSalvar()" value="SALVAR">
+		<table>
+            {% set i = 0 %}
+            {% for i in range(0,24) %}
+                <tr>
+                    <td>{{ horarios[i][0]  }}</td>
+                    {% if horarios[i][1] == '' %}
+                    <td><input value="LIVRE"></td>
+					{% else %}
+                    <td><input value="{{ horarios[i][1][0] }}"></td>
+                    <td><input value="{{ horarios[i][1][1] }}"></td>
+                    <td><input value="{{ horarios[i][1][4] }}"></td>
+                    <td><input value="{{ horarios[i][1][5] }}"></td>
+                    <td><input value="{{ horarios[i][1][6] }}"></td>
+                    <td><input value="{{ horarios[i][1][7] }}"></td>
+                    <td><input value="{{ horarios[i][1][8] }}"></td>
+                    <td><input value="{{ horarios[i][1][9] }}"></td>
+                    <td><input value="{{ horarios[i][1][10] }}"></td>
+                    <td><input value="{{ horarios[i][1][11] }}"></td>
+                    <td>
+                        <input type="submit" name="btnComando" value="ALTERA" onClick="modalAlterar({{ horario }})">
+                    </td>
+                    <td>
+                        <input type="submit" name="btnComando" value="EXCLUIR" onClick="modalExcluir({{ horario }})">
+                    </td>
+                    {% endif %}
+                </tr>
+			{% set i = i + 1 %}
+            {% endfor %}
+		</table>
+	</body>
 </html>
+<!-- Modal Salvar Horario -->
+<div class="modal fade" id="myModalSalvar" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<form action="/salvaHorarioDentista" method="POST">
+				<div class="modal-body">
+					<p>Salvar Dentista</p>
+					<input type="text" value="{{ cadeira }}" id="txtCadeira" name="txtCadeira">
+					<input type="hidden" value="{{ data }}" id="txtDataAgenda" name="txtDataAgenda">
+					<p>Dentista</p>
+					<select id = "selectDentista" name = "selectDentista">
+					{% for value in var %}
+						<option id="txtDentista" name="txtDentista" value="{{ value[23] }}"> {{ value[18] }} </option>
+					{% endfor %}
+					</select>
+					<p>Horario Início</p>
+					<input type="text" id="txtHorarioInicio" name="txtHorarioInicio">
+					<p>Horário Fim</p>
+					<input type="text" id="txtHorarioFim" name="txtHorarioFim">
+					<input type="submit" id="btnComando"
+						   name="btnComando" value="SALVAR"  class="btn btn-default">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Modal Alterar Horario -->
+<div class="modal fade" id="myModalAlterar" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<form action="/alteraHorarioDentista" method="POST">
+				<div class="modal-body">
+					<p>Salvar Dentista</p>
+					<input type="text" value="{{ cadeira }}" id="txtCadeiraAlterar" name="txtCadeira">
+					<input type="hidden" value="{{ data }}" id="txtDataAgendaAlterar" name="txtDataAgenda">
+					<p>Dentista</p>
+					<select id = "selectDentistaAlterar" name = "selectDentista">
+					{% for value in var %}
+						<option id="txtDentistaAlterar" name="txtDentista" value="{{ value[23] }}"> {{ value[18] }} </option>
+					{% endfor %}
+					</select>
+					<p>Horario Início</p>
+					<input type="text" id="txtHorarioInicioAlterar" name="txtHorarioInicio">
+					<p>Horário Fim</p>
+					<input type="text" id="txtHorarioFimAlterar" name="txtHorarioFim">
+					<input type="submit" id="btnComandoAlterar"
+						   name="btnComando" value="SALVAR"  class="btn btn-default">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Modal Excluir Horario -->
+<div class="modal fade" id="myModalExcluir" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<form action="/alteraHorarioDentista" method="POST">
+				<div class="modal-body">
+					<p>Salvar Dentista</p>
+					<input type="text" value="{{ cadeira }}" id="txtCadeiraExclui" name="txtCadeira">
+					<input type="hidden" value="{{ data }}" id="txtDataAgendaExclui" name="txtDataAgenda">
+					<p>Dentista</p>
+					<select id = "selectDentistaExclui" name = "selectDentista">
+					{% for value in var %}
+						<option id="txtDentistaExclui" name="txtDentista" value="{{ value[23] }}"> {{ value[18] }} </option>
+					{% endfor %}
+					</select>
+					<p>Horario Início</p>
+					<input type="text" id="txtHorarioInicioExclui" name="txtHorarioInicio">
+					<p>Horário Fim</p>
+					<input type="text" id="txtHorarioFimExclui" name="txtHorarioFim">
+					<input type="submit" id="btnComandoExclui"
+						   name="btnComando" value="SALVAR"  class="btn btn-default">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

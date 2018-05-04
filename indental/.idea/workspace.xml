@@ -11,62 +11,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Entidade.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Include/Entidade.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Testes.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Include/Testes.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DAO.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Include/DAO.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Strategy.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Include/Strategy.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="9" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/Include/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="400" column="40" selection-start-line="400" selection-start-column="40" selection-end-line="400" selection-end-column="40" />
+            <state relative-caret-position="7463">
+              <caret line="442" column="106" selection-start-line="442" selection-start-column="106" selection-end-line="442" selection-end-column="106" />
               <folding>
                 <element signature="e#2#25#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="agendaDentista.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/venv/Include/templates/agendaDentista.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="82" column="11" lean-forward="true" selection-start-line="82" selection-start-column="11" selection-end-line="82" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -75,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/venv/Include/Fachada.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="15" selection-end-column="5" />
+              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="15" selection-end-column="5" />
               <folding>
                 <element signature="e#1#16#0" expanded="true" />
               </folding>
@@ -92,6 +44,45 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="calendarize.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/Include/static/js/calendarize.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3043">
+              <caret line="179" column="77" selection-start-line="179" selection-start-column="77" selection-end-line="179" selection-end-column="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="agendaDentista.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/venv/Include/templates/agendaDentista.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendario.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/Include/templates/calendario.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DAO.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/Include/DAO.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7684">
+              <caret line="453" column="33" selection-start-line="453" selection-start-column="33" selection-end-line="453" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -104,22 +95,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>NomeClasse</find>
-      <find>% if(value != null)</find>
-      <find>%}</find>
-      <find>value=&quot;{{ if(value != null) value[0] }}&quot;</find>
-      <find>if(value != null)</find>
-      <find>value</find>
-      <find>value[0]</find>
-      <find>var[</find>
-      <find>txtEspecialidade</find>
-      <find>atualizaDentista</find>
-      <find>root</find>
-      <find>pitbul12</find>
-      <find>listaDentistas</find>
-      <find>txtIdPaciente</find>
-      <find>password = 'admin'</find>
-      <find>insertPaciente</find>
       <find>usuario = 'root'</find>
       <find>ord = 'pitbul12'</find>
       <find>__init__()</find>
@@ -134,6 +109,22 @@
       <find>indentalbd.</find>
       <find>funcao</find>
       <find>db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password, db='indentalbd')</find>
+      <find>'admin'</find>
+      <find>txtDataInicio</find>
+      <find>txtId</find>
+      <find>idtxtHorarioInicio</find>
+      <find>daohorario_dentista.busca</find>
+      <find>alert</find>
+      <find>href</find>
+      <find>horariode</find>
+      <find>txtCadeira</find>
+      <find>txtHorarioInicio</find>
+      <find>txtHorarioFim</find>
+      <find>alte</find>
+      <find>myModalAltera</find>
+      <find>myModalAlterar</find>
+      <find>modalAlterar</find>
+      <find>modalSalvar</find>
     </findStrings>
     <replaceStrings>
       <replace>__init__(self)</replace>
@@ -163,14 +154,19 @@
         <option value="$PROJECT_DIR$/venv/Include/Fachada.py" />
         <option value="$PROJECT_DIR$/venv/Include/Entidade.py" />
         <option value="$PROJECT_DIR$/venv/Include/Testes.py" />
-        <option value="$PROJECT_DIR$/venv/Include/Main.py" />
+        <option value="$PROJECT_DIR$/venv/Include/templates/js/calendarize.js" />
+        <option value="$PROJECT_DIR$/venv/Include/templates/CalendarioCadeira.html" />
+        <option value="$PROJECT_DIR$/venv/Include/static/js/Formatations.js" />
+        <option value="$PROJECT_DIR$/venv/Include/static/js/calendarize.js" />
+        <option value="$PROJECT_DIR$/venv/Include/templates/calendario.html" />
         <option value="$PROJECT_DIR$/venv/Include/DAO.py" />
+        <option value="$PROJECT_DIR$/venv/Include/Main.py" />
         <option value="$PROJECT_DIR$/venv/Include/templates/agendaDentista.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
+    <option name="x" value="-7" />
     <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
@@ -179,6 +175,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,6 +193,29 @@
               <item name="indental" type="462c0819:PsiDirectoryNode" />
               <item name="venv" type="462c0819:PsiDirectoryNode" />
               <item name="Include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="indental" type="b2602c69:ProjectViewProjectNode" />
+              <item name="indental" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="Include" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="indental" type="b2602c69:ProjectViewProjectNode" />
+              <item name="indental" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="Include" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="indental" type="b2602c69:ProjectViewProjectNode" />
+              <item name="indental" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+              <item name="Include" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="indental" type="b2602c69:ProjectViewProjectNode" />
@@ -227,13 +247,24 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Indental" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Daphne\Indental_Python\indental\venv\Include\css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Daphne\Indental_Python\indental\venv\Include\static\js" />
+      <recent name="C:\Users\Daphne\Indental_Python\indental\venv\Include\static\css" />
+      <recent name="C:\Users\Daphne\Indental_Python\indental\venv\Include\static" />
+      <recent name="C:\Users\Daphne\Indental_Python\indental\venv\Include\templates" />
+      <recent name="C:\Users\Daphne\Indental_Python\indental\venv\Include\js" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -371,16 +402,16 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25841874" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14714494" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29888713" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.29888713" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39966273" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -395,16 +426,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="7" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/venv/Include/Main.py" />
-    <entry file="file://$PROJECT_DIR$/../test/venv/Lib/site-packages/MySQLdb/connections.py" />
-    <entry file="file://$PROJECT_DIR$/venv/Include/templates/cadastroFuncionario.html">
+    <entry file="file://$PROJECT_DIR$/venv/Include/templates/agendaDentista.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="74" column="7" lean-forward="true" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
+        <state relative-caret-position="374">
+          <caret line="22" column="33" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -540,13 +569,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../test/venv/Lib/site-packages/MySQLdb/connections.py" />
-    <entry file="file://$PROJECT_DIR$/venv/Include/templates/visualizaDentista.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="32" column="30" selection-start-line="32" selection-start-column="30" selection-end-line="32" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/templates/listaDentistas.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -583,17 +605,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/templates/cadastroPaciente.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="31" column="82" selection-start-line="31" selection-start-column="82" selection-end-line="31" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/templates/visualizaPaciente.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
           <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/templates/cadastroPaciente.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="31" column="82" selection-start-line="31" selection-start-column="82" selection-end-line="31" selection-end-column="82" />
         </state>
       </provider>
     </entry>
@@ -604,13 +626,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/Fachada.py">
+    <entry file="file://$PROJECT_DIR$/venv/Include/static/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="e#1#16#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -621,51 +640,75 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/Testes.py">
+    <entry file="file://$PROJECT_DIR$/venv/Include/static/js/calendarize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="3043">
+          <caret line="179" column="77" selection-start-line="179" selection-start-column="77" selection-end-line="179" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/templates/calendario.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/templates/visualizaDentista.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="25" column="61" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/Entidade.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
+        <state relative-caret-position="17">
           <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="400" column="40" selection-start-line="400" selection-start-column="40" selection-end-line="400" selection-end-column="40" />
-          <folding>
-            <element signature="e#2#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/PycharmProjects/test/venv/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="1622" selection-start-line="1622" selection-end-line="1622" />
+        <state relative-caret-position="17">
+          <caret line="1617" column="40" selection-start-line="1617" selection-start-column="40" selection-end-line="1617" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/DAO.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        <state relative-caret-position="7684">
+          <caret line="453" column="33" selection-start-line="453" selection-start-column="33" selection-end-line="453" selection-end-column="33" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/Fachada.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="15" selection-end-column="5" />
+          <folding>
+            <element signature="e#1#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7463">
+          <caret line="442" column="106" selection-start-line="442" selection-start-column="106" selection-end-line="442" selection-end-column="106" />
+          <folding>
+            <element signature="e#2#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/templates/agendaDentista.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="82" column="11" lean-forward="true" selection-start-line="82" selection-start-column="11" selection-end-line="82" selection-end-column="11" />
+        <state relative-caret-position="136">
+          <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
         </state>
       </provider>
     </entry>

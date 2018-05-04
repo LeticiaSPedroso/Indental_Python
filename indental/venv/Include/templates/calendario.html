@@ -1,0 +1,30 @@
+<html>
+	<head>
+        <title>Calendario</title>
+		<link rel="stylesheet" href= "{{ url_for('static',filename='css/style.css') }}">
+		<script type="text/javascript" src="{{ url_for('static', filename='js/calendarize.js') }}"></script>
+	</head>
+	<body>
+		<form action="agendaDentista" method="POST">
+			<input type="hidden" id="txtData" name="txtData">
+			<select id="txtCadeira" name="txtCadeira">
+				<option value="1">Cadeira 1</option>
+				<option value="2">Cadeira 2</option>
+				<option value="3">Cadeira 3</option>
+				<option value="4">Cadeira 4</option>
+				<option value="5">Cadeira 5</option>
+			</select>
+
+			<input type="submit" id="btnComando" name="btnComando" value="VISUALIZAR_HORARIO">
+
+			<div id="calendar"></div>
+
+			<script type="text/javascript">
+				var $calendar = document.getElementById("calendar");
+				var currentYear = new Date().getFullYear();
+				var calendarize = new Calendarize();
+				calendarize.buildYearCalendar($calendar, currentYear);
+			</script>
+		</form>
+	</body>
+</html>

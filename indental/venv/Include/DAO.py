@@ -10,7 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-        self.password = 'admin'
+        self.password = 'pitbul12'
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
@@ -438,30 +438,62 @@ class HorarioDentistaDAO:
     def __init__(self):
         return
 
-    def lista(self):
+    def lista(self, data, cadeira):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM indentalbd.horario_dentista as hd " +
-                "inner join indentalbd.dentista d on d.id = hd.idDentista " +
-                "inner join indentalbd.pessoa p on p.id = d.idPessoa")
+        sql = "SELECT hd.*, DATE_FORMAT(hd.dataHorarioInicio, '%d/%m/%Y') as dtInicio, "
+        sql = sql + "DATE_FORMAT(hd.dataHorarioInicio,'%H:%i:%s') as horarioInicio, DATE_FORMAT(hd.dataHorarioTermino,"
+        sql = sql + " '%d/%m/%Y') as dtFim, DATE_FORMAT(hd.dataHorarioTermino, '%H:%i:%s') as horarioFim, p.nome, "
+        sql = sql + " p.sobrenome FROM indentalbd.horario_dentista as hd inner join indentalbd.dentista d on "
+        sql = sql + "d.id = hd.idDentista inner join indentalbd.pessoa p on p.id = d.idPessoa "
+                #"WHERE status = 0"
+        if data != '' and cadeira != '':
+            sql = sql + "WHERE CAST(dataHorarioInicio as Date) = STR_TO_DATE('" + data + "', '%d/%m/%Y') "
+            sql = sql + "and CAST(dataHorarioTermino as Date) = STR_TO_DATE('" + data + "', '%d/%m/%Y') "
+            sql = sql + "and cadeira = " + cadeira
+            sql = sql + " and hd.status = 0"
+            sql = sql + " order by dataHorarioInicio"
+        cursor.execute(sql)
         data = cursor.fetchall()
         return data
 
-    def busca(self, idDentista, dataHorarioInicio, dataHorarioFim, cadeira, status):
+    def busca(self, idDentista, dataHorarioInicio, dataHorarioTermino, cadeira, status):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM indentalbd.horario_dentista" +
-                       "where idDentista = " + idDentista + ' and cadeira = ' + cadeira + ' and status = ' + status +
-                       ' and dataHorario = ' + dataHorario)
-        data = cursor.fetchall()
+        if idDentista == '':
+            cursor.execute("SELECT * FROM indentalbd.horario_dentista" +
+                        " where cadeira = " + str(cadeira) + " and status = " + status +
+                        " and (dataHorarioInicio = STR_TO_DATE('" + str(dataHorarioInicio) +
+                        "','%d/%m/%Y %H:%i:%s') or " + " dataHorarioTermino = STR_TO_DATE('" + str(dataHorarioTermino) +
+                        "','%d/%m/%Y %H:%i:%s'))")
+        else:
+            cursor.execute("SELECT * FROM indentalbd.horario_dentista" +
+                        " where idDentista = " + str(idDentista) + " and cadeira = " + str(cadeira) + 
+                        " and status = " + status + " and (dataHorarioInicio = STR_TO_DATE('" + str(dataHorarioInicio) +
+                        "','%d/%m/%Y %H:%i:%s') or " + " dataHorarioTermino = STR_TO_DATE('" + str(dataHorarioTermino) +
+                        "','%d/%m/%Y %H:%i:%s'))")
+        
+        data = cursor.fetchone()
         return data
 
-    def salvar(self, idDentista, dataHorarioInicio, dataHorarioFim, cadeira, status):
+    def salvar(self, idDentista, dataHorarioInicio, dataHorarioTermino, cadeira, status):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute(
             "insert into indentalbd.horario_dentista (idDentista, dataHorarioInicio, dataHorarioTermino, cadeira, " +
             "status)" +
             "values(" + str(idDentista) + ", STR_TO_DATE('" + str(dataHorarioInicio) + "','%d/%m/%Y %H:%i:%s'), " +
-            "STR_TO_DATE('" + str(dataHorarioFim) + "','%d/%m/%Y %H:%i:%s'), " + str(cadeira) + ", " + str(status) +")")
+            "STR_TO_DATE('" + str(dataHorarioTermino) + "','%d/%m/%Y %H:%i:%s'), " + str(cadeira) + ", " + str(status) +
+            ")")
+
+        return
+
+    def altera(self, idDentista, dataHorarioInicio, dataHorarioFim, cadeira, status, id):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute(
+            "update indentalbd.horario_dentista set idDentista = " + str(idDentista) + ", dataHorarioInicio = " +
+            " STR_TO_DATE('" + str(dataHorarioInicio) + "','%d/%m/%Y %H:%i:%s'), dataHorarioTermino = " +
+            "STR_TO_DATE('" + str(dataHorarioFim) + "','%d/%m/%Y %H:%i:%s'), cadeira = " + str(cadeira) + ", status = "+
+            status + " where id = " + id)
         return
