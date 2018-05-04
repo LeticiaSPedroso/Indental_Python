@@ -579,6 +579,10 @@ def deletaHorarioDentista():
 
 
 app.secret_key = os.urandom(12)
+<<<<<<< HEAD
 
 
 app.run(port=5000)
+=======
+app.run(port=4996)
+>>>>>>> 36484e5d8d78fc6bdbcd13376e4d81188d11a8b8
