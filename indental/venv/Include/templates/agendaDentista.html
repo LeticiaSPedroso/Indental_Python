@@ -16,6 +16,7 @@
 			// Abre a modal de excluir horário
 			function modalExcluir(horario)
 			{
+				$("#txtId").val(horario);
 				$("#myModalExcluir").modal();
 			}
 
@@ -52,10 +53,10 @@
                     {% if horarios[i][1] == '' %}
                     <td><input value="LIVRE"></td>
 					{% else %}
-                    <td><input value="{{ horarios[i][1][0] }}"></td>
+                    <!--<td><input value="{{ horarios[i][1][0] }}"></td>
                     <td><input value="{{ horarios[i][1][1] }}"></td>
                     <td><input value="{{ horarios[i][1][4] }}"></td>
-                    <td><input value="{{ horarios[i][1][5] }}"></td>
+                    <td><input value="{{ horarios[i][1][5] }}"></td>-->
                     <td><input value="{{ horarios[i][1][6] }}"></td>
                     <td><input value="{{ horarios[i][1][7] }}"></td>
                     <td><input value="{{ horarios[i][1][8] }}"></td>
@@ -66,7 +67,8 @@
                         <input type="submit" name="btnComando" value="ALTERA" onClick="modalAlterar({{ horario }})">
                     </td>
                     <td>
-                        <input type="submit" name="btnComando" value="EXCLUIR" onClick="modalExcluir({{ horario }})">
+                        <input type="submit" name="btnComando" value="EXCLUIR"
+																	onClick="modalExcluir({{ horarios[i][1][0] }})">
                     </td>
                     {% endif %}
                 </tr>
@@ -143,11 +145,10 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Modal Header</h4>
 			</div>
-			<form action="/alteraHorarioDentista" method="POST">
+			<form action="/deletaHorarioDentista" method="POST">
 				<div class="modal-body">
-					<p>Salvar Dentista</p>
-					<input type="text" value="{{ cadeira }}" id="txtCadeiraExclui" name="txtCadeira">
-					<input type="hidden" value="{{ data }}" id="txtDataAgendaExclui" name="txtDataAgenda">
+					<p>Deseja realmente excluir este horário?</p>
+					<input type="text" id="txtId" name="txtId">
 					<p>Dentista</p>
 					<select id = "selectDentistaExclui" name = "selectDentista">
 					{% for value in var %}
@@ -158,8 +159,11 @@
 					<input type="text" id="txtHorarioInicioExclui" name="txtHorarioInicio">
 					<p>Horário Fim</p>
 					<input type="text" id="txtHorarioFimExclui" name="txtHorarioFim">
-					<input type="submit" id="btnComandoExclui"
-						   name="btnComando" value="SALVAR"  class="btn btn-default">
+      				<div class="modal-footer">
+						<input type="submit" id="btnComandoExclui"
+						   name="btnComando" value="EXCLUIR"  class="btn btn-default">
+        				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      				</div>
 				</div>
 			</form>
 		</div>

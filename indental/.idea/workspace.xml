@@ -11,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/venv/Include/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7463">
-              <caret line="442" column="106" selection-start-line="442" selection-start-column="106" selection-end-line="442" selection-end-column="106" />
+            <state relative-caret-position="223">
+              <caret line="577" column="44" selection-start-line="577" selection-start-column="44" selection-end-line="577" selection-end-column="44" />
               <folding>
                 <element signature="e#2#25#0" expanded="true" />
               </folding>
@@ -47,17 +47,17 @@
       <file leaf-file-name="calendarize.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/Include/static/js/calendarize.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3043">
+            <state relative-caret-position="382">
               <caret line="179" column="77" selection-start-line="179" selection-start-column="77" selection-end-line="179" selection-end-column="77" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="agendaDentista.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="agendaDentista.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/Include/templates/agendaDentista.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+            <state relative-caret-position="-255">
+              <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -66,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/venv/Include/templates/calendario.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
+              <caret line="7" column="36" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -74,8 +74,8 @@
       <file leaf-file-name="DAO.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/venv/Include/DAO.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7684">
-              <caret line="453" column="33" selection-start-line="453" selection-start-column="33" selection-end-line="453" selection-end-column="33" />
+            <state relative-caret-position="223">
+              <caret line="506" column="8" lean-forward="true" selection-start-line="506" selection-start-column="8" selection-end-line="506" selection-end-column="14" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -95,8 +95,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>usuario = 'root'</find>
-      <find>ord = 'pitbul12'</find>
       <find>__init__()</find>
       <find>usuario =</find>
       <find>usuario = 'admin'</find>
@@ -125,6 +123,8 @@
       <find>myModalAlterar</find>
       <find>modalAlterar</find>
       <find>modalSalvar</find>
+      <find>tuple</find>
+      <find>modalExcluir</find>
     </findStrings>
     <replaceStrings>
       <replace>__init__(self)</replace>
@@ -158,10 +158,10 @@
         <option value="$PROJECT_DIR$/venv/Include/templates/CalendarioCadeira.html" />
         <option value="$PROJECT_DIR$/venv/Include/static/js/Formatations.js" />
         <option value="$PROJECT_DIR$/venv/Include/static/js/calendarize.js" />
-        <option value="$PROJECT_DIR$/venv/Include/templates/calendario.html" />
         <option value="$PROJECT_DIR$/venv/Include/DAO.py" />
-        <option value="$PROJECT_DIR$/venv/Include/Main.py" />
+        <option value="$PROJECT_DIR$/venv/Include/templates/calendario.html" />
         <option value="$PROJECT_DIR$/venv/Include/templates/agendaDentista.html" />
+        <option value="$PROJECT_DIR$/venv/Include/Main.py" />
       </list>
     </option>
   </component>
@@ -251,7 +251,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Indental" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -407,7 +407,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.29888713" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29888713" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -640,20 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/static/js/calendarize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3043">
-          <caret line="179" column="77" selection-start-line="179" selection-start-column="77" selection-end-line="179" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/templates/calendario.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/templates/visualizaDentista.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
@@ -671,14 +657,21 @@
     <entry file="file://$USER_HOME$/PycharmProjects/test/venv/Lib/site-packages/flask/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1617" column="40" selection-start-line="1617" selection-start-column="40" selection-end-line="1617" selection-end-column="40" />
+          <caret line="1613" selection-start-line="1613" selection-end-line="1613" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/static/js/calendarize.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="179" column="77" selection-start-line="179" selection-start-column="77" selection-end-line="179" selection-end-column="77" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/DAO.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7684">
-          <caret line="453" column="33" selection-start-line="453" selection-start-column="33" selection-end-line="453" selection-end-column="33" />
+        <state relative-caret-position="223">
+          <caret line="506" column="8" lean-forward="true" selection-start-line="506" selection-start-column="8" selection-end-line="506" selection-end-column="14" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -695,20 +688,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Include/Main.py">
+    <entry file="file://$PROJECT_DIR$/venv/Include/templates/calendario.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7463">
-          <caret line="442" column="106" selection-start-line="442" selection-start-column="106" selection-end-line="442" selection-end-column="106" />
-          <folding>
-            <element signature="e#2#25#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="7" column="36" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/venv/Include/templates/agendaDentista.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="51" column="39" selection-start-line="51" selection-start-column="39" selection-end-line="51" selection-end-column="39" />
+        <state relative-caret-position="-255">
+          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Include/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="577" column="44" selection-start-line="577" selection-start-column="44" selection-end-line="577" selection-end-column="44" />
+          <folding>
+            <element signature="e#2#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

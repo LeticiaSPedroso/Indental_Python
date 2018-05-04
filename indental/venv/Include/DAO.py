@@ -10,11 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-<<<<<<< HEAD
         self.password = 'pitbul12'
-=======
-        self.password = 'root'
->>>>>>> df25b0f75cdcf4b886fe46a095574e4e3f8f65ca
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
@@ -506,4 +502,10 @@ class HorarioDentistaDAO:
             " STR_TO_DATE('" + str(dataHorarioInicio) + "','%d/%m/%Y %H:%i:%s'), dataHorarioTermino = " +
             "STR_TO_DATE('" + str(dataHorarioFim) + "','%d/%m/%Y %H:%i:%s'), cadeira = " + str(cadeira) + ", status = "+
             status + " where id = " + id)
+        return
+
+    def deleta(self, id):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("delete from indentalbd.horario_dentista where id = " + id)
         return

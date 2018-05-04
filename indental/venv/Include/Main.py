@@ -2,13 +2,10 @@
 
 from templates import *
 from DAO import *
-<<<<<<< HEAD
 from datetime import datetime
 from flask import Flask, render_template, request
-=======
 from flask import Flask, flash, render_template, request, session
 import os
->>>>>>> df25b0f75cdcf4b886fe46a095574e4e3f8f65ca
 
 app = Flask(__name__)
 
@@ -23,9 +20,11 @@ def hello_world():
     retorno = DAO.listar()
     return render_template('hello.html', var = retorno)
 
+
 @app.route("/login")
 def login():
     return render_template('login.html')
+
 
 @app.route('/logar', methods=['POST'])
 def logar():
@@ -492,11 +491,53 @@ def salvaHorarioDentista():
 
     daohorario_dentista.salvar(idDentista, horario_inicio, horario_fim, cadeira, '0')
 
-    # lista os horários de novo e retorna a agenda
+    # lista os horarios de novo e retorna a agenda
     clsdentista = DentistaDAO()
     clshorario_dentista = HorarioDentistaDAO()
     retorno = clsdentista.listar()
     horarios = clshorario_dentista.lista(data, cadeira)
+
+    print(len(horarios))
+
+    w, h = 500, 500;
+    Matrix = [[0 for x in range(w)] for y in range(h)]
+    inicio = 0
+    houveMudanca = 0
+    i = 0
+
+    while i <= 24:
+        houveMudanca = 0
+        inicio = 1
+
+        for h in horarios:
+            # iniciou o algum com esse tempo?
+            if (h[7] == time[i]):
+                indexInicio = time.index(h[7])
+                indexFim = time.index(h[9])
+                horaInicio = datetime_object = datetime.strptime(h[7], '%H:%M:%S')
+                horaFim = datetime_object = datetime.strptime(h[9], '%H:%M:%S')
+                diferenca = (horaFim - horaInicio)
+                houveMudanca = 1
+
+                i = time.index(time[i])
+                while h[9] != time[i]:
+                    # time[i] = t
+                    Matrix[i][0] = time[i]
+                    Matrix[i][1] = h
+                    print(Matrix[i][0])
+                    print(Matrix[i][1])
+                    print('hora' + str(time[i]))
+                    i = i + 1
+                    # time.index(i)
+                    # time[index][1] = h
+
+        if houveMudanca == 0:
+            Matrix[i][0] = time[i]
+            Matrix[i][1] = ''
+            print(Matrix[i][0])
+            print(Matrix[i][1])
+            i = i + 1
+
     return render_template('agendaDentista.html', horarios=horarios, var=retorno, cadeira=cadeira, data=data, time=time)
 
 
@@ -523,5 +564,21 @@ def alteraHorarioDentista():
     horariosDentista  = clshorario_dentista.lista()
     return render_template('agendaDentista.html', horarios=horariosDentista, var=retorno)
 
+
+@app.route("/deletaHorarioDentista", methods=['POST'])
+def deletaHorarioDentista():
+    id = request.form['txtId']
+
+    comando = request.form['btnComando']
+
+    daohorario_dentista = HorarioDentistaDAO()
+    daohorario_dentista.deleta(id)
+
+    # volta pro calendario
+    return render_template('calendario.html')
+
+
 app.secret_key = os.urandom(12)
-app.run(port=4996)
+
+
+app.run(port=5000)
