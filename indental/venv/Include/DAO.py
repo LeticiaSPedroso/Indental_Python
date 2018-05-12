@@ -10,11 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-<<<<<<< HEAD
-        self.password = 'pitbul12'
-=======
         self.password = 'admin'
->>>>>>> 4edeb3461b944fd80b2d122ea042a4775c2bbc5d
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
