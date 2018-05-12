@@ -653,19 +653,20 @@ def agendaConsulta():
 
 @app.route("/salvaHorarioConsulta", methods=['POST'])
 def salvaHorarioConsulta():
+    data = request.form['txtDataSalvar']
     valor = request.form['txtValor']
     idHorarioDentista = request.form['txtIdHorario']
     cpf_paciente = request.form['txtCpf']
-    dataHorarioInicio = data + ' ' + request.form['txtHorarioInicio']
-    dataHorarioFim = data + ' ' + request.form['txtHorarioFim']
+    horario_inicio = data + ' ' + request.form['txtHorarioInicio']
+    horario_fim = data + ' ' + request.form['txtHorarioFim']
 
     comando = request.form['btnComando']
 
     daohorario_paciente = HorarioPacienteDAO()
     daopaciente = PacienteDAO()
-    idPaciente = daohorario_paciente.buscaCpf(cpf_paciente)
+    idPaciente = daopaciente.buscaCpf(cpf_paciente)
 
-    daohorario_dentista.salvar(idPaciente, idHorarioDentista, dataHorarioInicio, dataHorarioFim, valor)
+    daohorario_paciente.salvar(idPaciente, idHorarioDentista, horario_inicio, horario_fim, valor)
     # volta pro calendario
     return "oi"
     #render_template('calendario.html', horariosDe=MatrixDentista, data=data, time=time, horarios=Matrix)

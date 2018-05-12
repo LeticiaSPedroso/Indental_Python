@@ -18,7 +18,7 @@
 		    }
 
 			// Abre a modal de salvar horário
-			function modalSalvar(horario, cadeira)
+			function modalSalvar(horario, cadeira, data)
 			{
 				alert(horario+', '+ cadeira);
 
@@ -48,7 +48,7 @@
             	{% endfor %}
 				// funcao para pegar os dentistas neste horario nesta cadeira
 
-				$("#txtData").val({{ data }});
+				$("#txtDataSalvar").val(data);
 				$("#txtDentista").val(dentista);
 				$("#txtCadeira").val(cadeira);
 				$("#txtHorarioInicio").val(horario);
@@ -108,31 +108,34 @@
 
 					<!-- Cadeira 1 -->
                     {% if horarios[1, i, 1] == '' %}
-                    <td><input  type="button" onclick="modalSalvar('{{time[i]}}', 1)" value="LIVRE"></td>
+                    <td><input  type="button" onclick="modalSalvar('{{time[i]}}', 1, '{{ data }}')" value="LIVRE"></td>
 					{% else %}
-                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 1, {{ horarios[1][i][1][0] }})"
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 1, {{ horarios[1][i][1][0] }},
+                    					'{{ data }}')"
                                value="{{ horarios[1][i][1][16] }} {{ horarios[1][i][1][17] }}"></td>
                     {% endif %}
 
 					<!-- Cadeira 2 -->
                     {% if horarios[2, i, 1] == '' %}
-                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 2)" value="LIVRE"></td>
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 2, '{{ data }}')" value="LIVRE"></td>
 					{% else %}
-                    <td><input  type="button" onclick="modalAlterar('{{time[i]}}', 2, {{ horarios[2][i][1][0] }})"
+                    <td><input  type="button" onclick="modalAlterar('{{time[i]}}', 2, {{ horarios[2][i][1][0] }},
+                    					'{{ data }}')"
 											value="{{ horarios[2][i][1][16] }} {{ horarios[2][i][1][17] }}"></td>
                     {% endif %}
 
 					<!-- Cadeira 3 -->
                     {% if horarios[3, i, 1] == '' %}
-                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 3)" value="LIVRE"></td>
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 3, '{{ data }}')" value="LIVRE"></td>
 					{% else %}
-                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 3, {{ horarios[3][i][1][0] }})"
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 3, {{ horarios[3][i][1][0] }},
+                    					'{{ data }}')"
 											value="{{ horarios[3][i][1][16] }} {{ horarios[3][i][1][17] }}"></td>
                     {% endif %}
 
 					<!-- Cadeira 4 -->
                     {% if horarios[4, i, 1] == '' %}
-                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 4)" value="LIVRE"></td>
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 4, '{{ data }}')" value="LIVRE"></td>
 					{% else %}
                     <td><input type="button" onclick="modalAlterar('{{time[i]}}', 4, {{ horarios[4][i][1][0] }})"
 							   value="{{ horarios[4][i][1][16] }} {{ horarios[4][i][1][17] }}"></td>
@@ -142,7 +145,8 @@
                     {% if horarios[5, i, 1] == '' %}
                     <td><input type="button" onclick="modalSalvar('{{time[i]}}', 5)" value="LIVRE"></td>
 					{% else %}
-                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 5, {{ horarios[5][i][1][0] }})"
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 5, {{ horarios[5][i][1][0] }},
+                    					'{{ data }})'"
 							   value="{{ horarios[5][i][1][16] }} {{ horarios[5][i][1][17] }}"></td>
                     {% endif %}
                 </tr>
@@ -163,7 +167,7 @@
 				<div class="modal-body">
 					<p>Salvar Consulta</p>
 					<input type="hidden" id="txtCadeira" name="txtCadeira">
-					<input type="hidden" id="txtData" name="txtData">
+					<input type="text" id="txtDataSalvar" name="txtDataSalvar">
 					<input type="hidden" id="txtHorarioInicio" name="txtHorarioInicio">
 					<input type="hidden" id="txtHorarioFim" name="txtHorarioFim">
 					<input type="hidden" id="txtIdHorario" name="txtIdHorario">

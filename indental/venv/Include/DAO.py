@@ -10,11 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-<<<<<<< HEAD
         self.password = 'pitbul12'
-=======
-        self.password = 'admin'
->>>>>>> 4edeb3461b944fd80b2d122ea042a4775c2bbc5d
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
@@ -308,9 +304,9 @@ class PacienteDAO:
     def buscaCpf(self, cpfPaciente):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
-        cursor.execute("SELECT p.id FROM indentalbd.paciente as pac " +
-                        "inner join indentalbd.pessoa p on (p.id = pac.idPessoa)" +
-                        "where p.cpf = " + cpfPaciente)
+        cursor.execute("SELECT pac.id FROM indentalbd.paciente as pac " +
+                       "inner join indentalbd.pessoa p on (p.id = pac.idPessoa)" +
+                       "where p.cpf = '" + cpfPaciente + "'")
         data = cursor.fetchone()
         return data[0]
 
@@ -465,11 +461,14 @@ class HorarioPacienteDAO:
         return data
 
     def salvar(self, idPaciente, idHorarioDentista, dataHorarioInicio, dataHorarioFim, valor):
-        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
+        db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
-        cursor.execute("insert into indentalbd.horario_paciente values(null, " + idPaciente + ", " + idHorarioDentista +
-                       " STR_TO_DATE('"+dataHorarioInicio+"','%d/%m/%Y'), STR_TO_DATE('"+dataHorarioFim+"','%d/%m/%Y')"+
-                        ", " + valor + ",0)")
+        cursor.execute("insert into indentalbd.horario_paciente (id, idPaciente, idHorarioDentista, " +
+                       "dataHorarioInicio, dataHorarioTermino, valor, status) " +
+                       "values (null, " + str(idPaciente) + ", " + str(idHorarioDentista) + ", " +
+                       "STR_TO_DATE('" + str(dataHorarioInicio) + "', '%d/%m/%Y %H:%i:%s'), " +
+                       "STR_TO_DATE('" + str(dataHorarioFim) + "', '%d/%m/%Y %H:%i:%s'), " + str(valor) + ", 0)")
+        cursor.close()
         return
 
 
@@ -523,7 +522,7 @@ class HorarioDentistaDAO:
         cursor = db.cursor()
         cursor.execute(
             "insert into indentalbd.horario_dentista (idDentista, dataHorarioInicio, dataHorarioTermino, cadeira, " +
-            "status)" +
+            "status) " +
             "values(" + str(idDentista) + ", STR_TO_DATE('" + str(dataHorarioInicio) + "','%d/%m/%Y %H:%i:%s'), " +
             "STR_TO_DATE('" + str(dataHorarioTermino) + "','%d/%m/%Y %H:%i:%s'), " + str(cadeira) + ", " + str(status) +
             ")")
