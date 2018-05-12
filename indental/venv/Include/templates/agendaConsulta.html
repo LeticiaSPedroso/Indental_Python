@@ -7,8 +7,7 @@
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<script>
-
-			window.onload = function()
+		    window.onload = function()
 		    {
 		        var dateString = "{{ data }}";
 
@@ -16,12 +15,48 @@
 
                 var dateObject = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); // month is 0-based
 
-				document.getElementById('txtDataFormat').value = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
 		    }
 
 			// Abre a modal de salvar horário
-			function modalSalvar()
+			function modalSalvar(horario, cadeira)
 			{
+				alert(horario+', '+ cadeira);
+
+				var dentista = '';
+				var horarioInicio = '';
+				var horarioFim = '';
+				var idHorario = '';
+
+				{% set i = 0 %}
+            	{% for i in range(0,24) %}
+            		if(horario == '{{ time[i] }}')
+            		{
+						{% set j = 1 %}
+						{% for j in range(1,5) %}
+							if(cadeira == {{ j }})
+            				{
+            					dentista = "{{ horariosDe[j][i][1][10] }} {{ horariosDe[j][i][1][11] }}";
+            					horarioInicioDentista = "{{ horariosDe[j][i][1][7] }}";
+            					horarioFimDentista = "{{ horariosDe[j][i][1][9] }}";
+            					idHorario = "{{ horariosDe[j][i][1][0] }}";
+            					horarioFim = '{{ time[i + 1] }}';
+							}
+						{% set j = j + 1 %}
+						{% endfor %}
+            		}
+				{% set i = i + 1 %}
+            	{% endfor %}
+				// funcao para pegar os dentistas neste horario nesta cadeira
+
+				$("#txtData").val({{ data }});
+				$("#txtDentista").val(dentista);
+				$("#txtCadeira").val(cadeira);
+				$("#txtHorarioInicio").val(horario);
+				$("#txtHorarioFim").val(horarioFim);
+				$("#txtHorarioInicioDentista").val(horarioInicioDentista);
+				$("#txtHorarioFimDentista").val(horarioFimDentista);
+				$("#txtIdHorario").val(idHorario);
+
 				$("#myModalSalvar").modal();
 			}
 
@@ -46,59 +81,69 @@
 				var horarioFim = document.getElementsByName('txtHorarioFim');
 
 				{% for horario in horarios %}
-					/*if ({{ horario }} >= horarioInicio)
-					{
-					}*/
+
 				{% endfor %}
-			}
-
-			// funcao para verificar antes de buscar
-			function verifica()
-			{
-			    var data = document.getElementById('txtDataFormat').value;
-                var dateParts2 = data.split("-");
-			    var cadeira = document.getElementById('txtCadeira').value;
-
-				document.getElementById('txtData').value = dateParts2[2] + '/' + dateParts2[1] + '/' + dateParts2[0];
-			    alert(dateParts2[2] + '/' + dateParts2[1] + '/' + dateParts2[0]);
-                return true;
 			}
 		</script>
 	</head>
 		<h2>Agenda da Cadeira: {{ cadeira }}</h2>
 		<h2>Dia: {{ data }}</h2>
-		<form action="agendaDentista" method="POST" onsubmit="return verifica()">
-            <input type="date" id="txtDataFormat" name="txtDataFormat">
-            <input type="hidden" id="txtCadeira2" name="txtCadeira" value="{{ cadeira }}">
-            <input type="hidden" id="txtData" name="txtData">
-            <input type="submit" id="btnComando2" name="btnComando" value="BUSCAR">
-        </form>
+		<input type="date" id="txtData" name="txtData" value="{{ data }}">
 		<input type="button" id="btnModalSalvar" name="btnModalSalvar" onclick="modalSalvar()" value="SALVAR">
 		<table>
+			<thead>
+				<tr>
+					<td>Horario</td>
+					<td>Cadeira 1</td>
+					<td>Cadeira 2</td>
+					<td>Cadeira 3</td>
+					<td>Cadeira 4</td>
+					<td>Cadeira 5</td>
+				</tr>
+			</thead>
             {% set i = 0 %}
             {% for i in range(0,24) %}
                 <tr>
-                    <td>{{ horarios[i][0]  }}</td>
-                    {% if horarios[i][1] == '' %}
-                    <td><input value="LIVRE"></td>
+                    <td>{{ time[i] }}</td>
+
+					<!-- Cadeira 1 -->
+                    {% if horarios[1, i, 1] == '' %}
+                    <td><input  type="button" onclick="modalSalvar('{{time[i]}}', 1)" value="LIVRE"></td>
 					{% else %}
-                    <!--<td><input value="{{ horarios[i][1][0] }}"></td>
-                    <td><input value="{{ horarios[i][1][1] }}"></td>
-                    <td><input value="{{ horarios[i][1][4] }}"></td>
-                    <td><input value="{{ horarios[i][1][5] }}"></td>-->
-                    <td><input value="{{ horarios[i][1][6] }}"></td>
-                    <td><input value="{{ horarios[i][1][7] }}"></td>
-                    <td><input value="{{ horarios[i][1][8] }}"></td>
-                    <td><input value="{{ horarios[i][1][9] }}"></td>
-                    <td><input value="{{ horarios[i][1][10] }}"></td>
-                    <td><input value="{{ horarios[i][1][11] }}"></td>
-                    <td>
-                        <input type="submit" name="btnComando" value="ALTERA" onClick="modalAlterar({{ horario }})">
-                    </td>
-                    <td>
-                        <input type="submit" name="btnComando" value="EXCLUIR"
-																	onClick="modalExcluir({{ horarios[i][1][0] }})">
-                    </td>
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 1, {{ horarios[1][i][1][0] }})"
+                               value="{{ horarios[1][i][1][16] }} {{ horarios[1][i][1][17] }}"></td>
+                    {% endif %}
+
+					<!-- Cadeira 2 -->
+                    {% if horarios[2, i, 1] == '' %}
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 2)" value="LIVRE"></td>
+					{% else %}
+                    <td><input  type="button" onclick="modalAlterar('{{time[i]}}', 2, {{ horarios[2][i][1][0] }})"
+											value="{{ horarios[2][i][1][16] }} {{ horarios[2][i][1][17] }}"></td>
+                    {% endif %}
+
+					<!-- Cadeira 3 -->
+                    {% if horarios[3, i, 1] == '' %}
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 3)" value="LIVRE"></td>
+					{% else %}
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 3, {{ horarios[3][i][1][0] }})"
+											value="{{ horarios[3][i][1][16] }} {{ horarios[3][i][1][17] }}"></td>
+                    {% endif %}
+
+					<!-- Cadeira 4 -->
+                    {% if horarios[4, i, 1] == '' %}
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 4)" value="LIVRE"></td>
+					{% else %}
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 4, {{ horarios[4][i][1][0] }})"
+							   value="{{ horarios[4][i][1][16] }} {{ horarios[4][i][1][17] }}"></td>
+                    {% endif %}
+
+					<!-- Cadeira 5 -->
+                    {% if horarios[5, i, 1] == '' %}
+                    <td><input type="button" onclick="modalSalvar('{{time[i]}}', 5)" value="LIVRE"></td>
+					{% else %}
+                    <td><input type="button" onclick="modalAlterar('{{time[i]}}', 5, {{ horarios[5][i][1][0] }})"
+							   value="{{ horarios[5][i][1][16] }} {{ horarios[5][i][1][17] }}"></td>
                     {% endif %}
                 </tr>
 			{% set i = i + 1 %}
@@ -114,21 +159,24 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Modal Header</h4>
 			</div>
-			<form action="/salvaHorarioDentista" method="POST">
+			<form action="/salvaHorarioConsulta" method="POST">
 				<div class="modal-body">
-					<p>Salvar Dentista</p>
-					<input type="text" value="{{ cadeira }}" id="txtCadeira" name="txtCadeira">
-					<input type="hidden" value="{{ data }}" id="txtDataAgenda" name="txtDataAgenda">
+					<p>Salvar Consulta</p>
+					<input type="hidden" id="txtCadeira" name="txtCadeira">
+					<input type="hidden" id="txtData" name="txtData">
+					<input type="hidden" id="txtHorarioInicio" name="txtHorarioInicio">
+					<input type="hidden" id="txtHorarioFim" name="txtHorarioFim">
+					<input type="hidden" id="txtIdHorario" name="txtIdHorario">
 					<p>Dentista</p>
-					<select id = "selectDentista" name = "selectDentista">
-					{% for value in var %}
-						<option id="txtDentista" name="txtDentista" value="{{ value[23] }}"> {{ value[18] }} </option>
-					{% endfor %}
-					</select>
+					<input type="text" id="txtDentista" name="txtDentista" readonly>
 					<p>Horario Início</p>
-					<input type="text" id="txtHorarioInicio" name="txtHorarioInicio">
+					<input type="text" id="txtHorarioInicioDentista" name="txtHorarioInicioDentista" readonly>
 					<p>Horário Fim</p>
-					<input type="text" id="txtHorarioFim" name="txtHorarioFim">
+					<input type="text" id="txtHorarioFimDentista" name="txtHorarioFimDentista" readonly>
+					<p>Cpf</p>
+					<input type="text" id="txtCpf" name="txtCpf">
+					<p>Valor Consulta</p>
+					<input type="text" id="txtValor" name="txtValor">
 					<input type="submit" id="btnComando"
 						   name="btnComando" value="SALVAR"  class="btn btn-default">
 				</div>

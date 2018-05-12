@@ -10,12 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-<<<<<<< HEAD
         self.password = 'pitbul12'
-=======
-        self.password = 'admin'
-        self.password = 'root'
->>>>>>> 36484e5d8d78fc6bdbcd13376e4d81188d11a8b8
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
@@ -306,6 +301,15 @@ class PacienteDAO:
         data = cursor.fetchall()
         return data
 
+    def buscaCpf(self, cpfPaciente):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("SELECT p.id FROM indentalbd.paciente as pac " +
+                        "inner join indentalbd.pessoa p on (p.id = pac.idPessoa)" +
+                        "where p.cpf = " + cpfPaciente)
+        data = cursor.fetchone()
+        return data[0]
+
     def busca(self, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
@@ -417,15 +421,35 @@ class TratamentoDAO:
             " where id = '" + id + "'")
         return
 
+
 class HorarioPacienteDAO:
 
     def __init__(self):
         return
 
-    def lista(self):
-        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
+    def lista(self, data, cadeira):
+        db = AbstractDAO.getConexao(self)
+        print("DATA: " + data + "CADEIRA: " + str(cadeira))
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM indentalbd.horario_paciente")
+        sql = "SELECT hp.*, DATE_FORMAT(hp.dataHorarioInicio, '%d/%m/%Y') as dtInicio, "
+        sql = sql + "DATE_FORMAT(hp.dataHorarioInicio, '%H:%i:%s') as horarioInicio, DATE_FORMAT(hp.dataHorarioTermino,"
+        sql = sql + " '%d/%m/%Y') as dtFim, DATE_FORMAT(hp.dataHorarioTermino, '%H:%i:%s') as horarioFim, p.nome, "
+        sql = sql + " p.sobrenome, pe.* FROM indentalbd.horario_paciente as hp "
+        sql = sql + "inner join indentalbd.horario_dentista hd "
+        sql = sql + "on hd.id = hp.idHorarioDentista left join indentalbd.dentista d on d.id = hd.idDentista "
+        sql = sql + "left join indentalbd.pessoa p on p.id = d.idPessoa "
+        sql = sql + "left join indentalbd.paciente pac on pac.id = hp.idPaciente "
+        sql = sql + "left join indentalbd.pessoa pe on pe.id = pac.idPessoa "
+
+        if data != '':
+            sql = sql + "WHERE CAST(hp.dataHorarioInicio as Date) = STR_TO_DATE('" + data + "', '%d/%m/%Y') "
+            sql = sql + "and CAST(hp.dataHorarioTermino as Date) = STR_TO_DATE('" + data + "', '%d/%m/%Y') "
+        if cadeira != '':
+            sql = sql + "and hd.cadeira = " + str(cadeira)
+
+        sql = sql + " and hp.status = 0"
+        sql = sql + " order by hp.dataHorarioInicio"
+        cursor.execute(sql)
         data = cursor.fetchall()
         return data
 
@@ -436,13 +460,14 @@ class HorarioPacienteDAO:
         data = cursor.fetchall()
         return data
 
-    def salvar(self, idPaciente, idDentista, dataHorario, valor, status):
+    def salvar(self, idPaciente, idHorarioDentista, dataHorarioInicio, dataHorarioFim, valor):
         db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
         cursor = db.cursor()
-        cursor.execute("insert into indentalbd.horario_paciente (idPaciente, idDentista, dataHorario, valor, status)" +
-                       "values("+idPaciente+", "+idDentista+", STR_TO_DATE('"+dataHorario+"','%d/%m/%Y'), " +
-                        valor + ",'"+status+"')")
+        cursor.execute("insert into indentalbd.horario_paciente values(null, " + idPaciente + ", " + idHorarioDentista +
+                       " STR_TO_DATE('"+dataHorarioInicio+"','%d/%m/%Y'), STR_TO_DATE('"+dataHorarioFim+"','%d/%m/%Y')"+
+                        ", " + valor + ",0)")
         return
+
 
 class HorarioDentistaDAO:
 
@@ -457,13 +482,15 @@ class HorarioDentistaDAO:
         sql = sql + " '%d/%m/%Y') as dtFim, DATE_FORMAT(hd.dataHorarioTermino, '%H:%i:%s') as horarioFim, p.nome, "
         sql = sql + " p.sobrenome FROM indentalbd.horario_dentista as hd inner join indentalbd.dentista d on "
         sql = sql + "d.id = hd.idDentista inner join indentalbd.pessoa p on p.id = d.idPessoa "
-                #"WHERE status = 0"
-        if data != '' and cadeira != '':
+
+        if data != '':
             sql = sql + "WHERE CAST(dataHorarioInicio as Date) = STR_TO_DATE('" + data + "', '%d/%m/%Y') "
             sql = sql + "and CAST(dataHorarioTermino as Date) = STR_TO_DATE('" + data + "', '%d/%m/%Y') "
-            sql = sql + "and cadeira = " + cadeira
-            sql = sql + " and hd.status = 0"
-            sql = sql + " order by dataHorarioInicio"
+        if cadeira != '':
+            sql = sql + "and cadeira = " + str(cadeira)
+
+        sql = sql + " and hd.status = 0"
+        sql = sql + " order by dataHorarioInicio"
         cursor.execute(sql)
         data = cursor.fetchall()
         return data
@@ -508,12 +535,9 @@ class HorarioDentistaDAO:
             "STR_TO_DATE('" + str(dataHorarioFim) + "','%d/%m/%Y %H:%i:%s'), cadeira = " + str(cadeira) + ", status = "+
             status + " where id = " + id)
         return
-<<<<<<< HEAD
 
     def deleta(self, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute("delete from indentalbd.horario_dentista where id = " + id)
         return
-=======
->>>>>>> 36484e5d8d78fc6bdbcd13376e4d81188d11a8b8

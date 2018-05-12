@@ -1,17 +1,17 @@
 
-
 from templates import *
 from DAO import *
 from datetime import datetime
 from flask import Flask, render_template, request
 from flask import Flask, flash, render_template, request, session
+import numpy as np
 import os
 
 app = Flask(__name__)
 
-time = ['08:00:00', '08:30:00', '09:00:00', '09:30:00', '10:00:00', '10:30:00', '11:00:00', '11:30:00', '12:00:00',
-        '12:30:00', '13:00:00', '13:30:00', '14:00:00', '14:30:00', '15:00:00', '15:30:00', '16:00:00', '16:30:00',
-        '17:00:00', '17:30:00', '18:00:00', '18:30:00', '19:00:00', '19:30:00', '20:00:00']
+time = ["08:00:00", "08:30:00", "09:00:00", "09:30:00", "10:00:00", "10:30:00", "11:00:00", "11:30:00", "12:00:00",
+        "12:30:00", "13:00:00", "13:30:00", "14:00:00", "14:30:00", "15:00:00", "15:30:00", "16:00:00", "16:30:00",
+        "17:00:00", "17:30:00", "18:00:00", "18:30:00", "19:00:00", "19:30:00", "20:00:00"]
 
 
 @app.route("/")
@@ -423,8 +423,6 @@ def agenda():
     retorno = clsdentista.listar()
     horarios = clshorario_dentista.lista(data, cadeira)
 
-    print(len(horarios))
-
     w, h = 500, 500;
     Matrix = [[0 for x in range(w)] for y in range(h)]
     inicio = 0
@@ -447,21 +445,17 @@ def agenda():
 
                 i = time.index(time[i])
                 while h[9] != time[i]:
-                    #time[i] = t
                     Matrix[i][0] = time[i]
                     Matrix[i][1] = h
-                    print(Matrix[i][0])
-                    print(Matrix[i][1])
-                    #print('hora' + str(time[i]))
+                    #print(Matrix[i][0])
+                    #print(Matrix[i][1])
                     i = i + 1
-                    #time.index(i)
-                    #time[index][1] = h
 
         if houveMudanca == 0:
             Matrix[i][0] = time[i]
             Matrix[i][1] = ''
-            print(Matrix[i][0])
-            print(Matrix[i][1])
+            #print(Matrix[i][0])
+            #print(Matrix[i][1])
             i = i + 1
 
 
@@ -471,7 +465,6 @@ def agenda():
 @app.route("/salvaHorarioDentista", methods=['POST'])
 def salvaHorarioDentista():
     data = request.form['txtDataAgenda']
-    print(data)
     cpfDentista = request.form['selectDentista']
     cadeira = request.form['txtCadeira']
     horario_inicio = data + ' ' + request.form['txtHorarioInicio']
@@ -496,8 +489,6 @@ def salvaHorarioDentista():
     clshorario_dentista = HorarioDentistaDAO()
     retorno = clsdentista.listar()
     horarios = clshorario_dentista.lista(data, cadeira)
-
-    print(len(horarios))
 
     w, h = 500, 500;
     Matrix = [[0 for x in range(w)] for y in range(h)]
@@ -524,9 +515,6 @@ def salvaHorarioDentista():
                     # time[i] = t
                     Matrix[i][0] = time[i]
                     Matrix[i][1] = h
-                    print(Matrix[i][0])
-                    print(Matrix[i][1])
-                    print('hora' + str(time[i]))
                     i = i + 1
                     # time.index(i)
                     # time[index][1] = h
@@ -534,11 +522,9 @@ def salvaHorarioDentista():
         if houveMudanca == 0:
             Matrix[i][0] = time[i]
             Matrix[i][1] = ''
-            print(Matrix[i][0])
-            print(Matrix[i][1])
             i = i + 1
 
-    return render_template('agendaDentista.html', horarios=horarios, var=retorno, cadeira=cadeira, data=data, time=time)
+    return render_template('calendario.html')
 
 
 @app.route("/alteraHorarioDentista", methods=['POST'])
@@ -578,11 +564,114 @@ def deletaHorarioDentista():
     return render_template('calendario.html')
 
 
+@app.route("/calendarioConsulta")
+def calendarioConsulta():
+    return render_template('calendarioConsulta.html')
+
+
+@app.route("/agendaConsulta", methods=['POST'])
+def agendaConsulta():
+    data = request.form['txtData']
+
+    comando = request.form['btnComando']
+    cadeira_num = 1
+    Matrix = np.zeros((10, 500, 500), dtype=object)  # dtype='U25')
+
+    while cadeira_num <= 5:
+        daohorario_paciente = HorarioPacienteDAO()
+        horarios = daohorario_paciente.lista(data, cadeira_num)
+        #w, h, d = 500, 500, 500;
+        #Matrix = [[0 for x in range(w)] for y in range(h) for y in range(d)]
+        inicio = 0
+        houveMudanca = 0
+        i = 0
+
+        while i <= 24:
+            print("horario" + time[i])
+            print("cadeira_num"+str(cadeira_num))
+            houveMudanca = 0
+            for h in horarios:
+                #iniciou o algum com esse tempo?
+                if (h[8] == time[i]):
+                    houveMudanca = 1
+
+                    i = time.index(time[i])
+                    while h[10] != time[i]:
+                        Matrix[cadeira_num, i, 0] = str(time[i])
+                        Matrix[cadeira_num, i, 1] = h
+                        print(Matrix[cadeira_num, i, 0])
+                        print(Matrix[cadeira_num, i, 1])
+                        i = i + 1
+
+            if houveMudanca == 0:
+                Matrix[cadeira_num, i, 0] = time[i]
+                Matrix[cadeira_num, i, 1] = ''
+                print(Matrix[cadeira_num, i, 0])
+                print(Matrix[cadeira_num, i, 1])
+                i = i + 1
+        cadeira_num = cadeira_num + 1
+
+
+    cadeira_num = 1
+    MatrixDentista = np.zeros((10, 500, 500), dtype=object)  # dtype='U25')
+
+    while cadeira_num <= 5:
+        daohorario_dentista = HorarioDentistaDAO()
+        horarios = daohorario_dentista.lista(data, cadeira_num)
+        inicio = 0
+        houveMudanca = 0
+        i = 0
+
+        while i <= 24:
+            print("horario" + time[i])
+            print("cadeira_num" + str(cadeira_num))
+            houveMudanca = 0
+            for h in horarios:
+                # iniciou o algum com esse tempo?
+                if (h[7] == time[i]):
+                    houveMudanca = 1
+
+                    i = time.index(time[i])
+                    while h[9] != time[i]:
+                        MatrixDentista[cadeira_num, i, 0] = str(time[i])
+                        MatrixDentista[cadeira_num, i, 1] = h
+                        print(MatrixDentista[cadeira_num, i, 0])
+                        print(MatrixDentista[cadeira_num, i, 1])
+                        i = i + 1
+
+            if houveMudanca == 0:
+                MatrixDentista[cadeira_num, i, 0] = time[i]
+                MatrixDentista[cadeira_num, i, 1] = ''
+                print(MatrixDentista[cadeira_num, i, 0])
+                print(MatrixDentista[cadeira_num, i, 1])
+                i = i + 1
+        cadeira_num = cadeira_num + 1
+
+    # volta pro calendario
+    return render_template('agendaConsulta.html',  horariosDe=MatrixDentista, data=data, time=time, horarios=Matrix)
+
+
+@app.route("/salvaHorarioConsulta", methods=['POST'])
+def salvaHorarioConsulta():
+    valor = request.form['txtValor']
+    idHorarioDentista = request.form['txtIdHorario']
+    cpf_paciente = request.form['txtCpf']
+    dataHorarioInicio = data + ' ' + request.form['txtHorarioInicio']
+    dataHorarioFim = data + ' ' + request.form['txtHorarioFim']
+
+    comando = request.form['btnComando']
+
+    daohorario_paciente = HorarioPacienteDAO()
+    daopaciente = PacienteDAO()
+    idPaciente = daohorario_paciente.buscaCpf(cpf_paciente)
+
+    daohorario_dentista.salvar(idPaciente, idHorarioDentista, dataHorarioInicio, dataHorarioFim, valor)
+    # volta pro calendario
+    return "oi"
+    #render_template('calendario.html', horariosDe=MatrixDentista, data=data, time=time, horarios=Matrix)
+
+
 app.secret_key = os.urandom(12)
-<<<<<<< HEAD
 
 
-app.run(port=5000)
-=======
 app.run(port=4996)
->>>>>>> 36484e5d8d78fc6bdbcd13376e4d81188d11a8b8

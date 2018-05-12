@@ -224,6 +224,5 @@ function FormatDate(date)
         mes = '0'+mes;
 
     var newDate = dia + '/' + mes + '/' + ano;
-    alert('oii' + newDate);
     return newDate;
 }
