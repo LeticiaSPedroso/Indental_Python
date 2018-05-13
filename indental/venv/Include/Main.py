@@ -130,8 +130,8 @@ def visualizaFuncionario():
     return render_template('visualizaFuncionario.html', var = retorno)
 
 
-@app.route("/atualizaFuncionario", methods=['POST'])
-def atualizaFuncionario():
+@app.route("/alteraFuncionario", methods=['POST'])
+def alteraFuncionario():
     idUser = request.form['txtIdUsuario']
     idPes = request.form['txtIdPessoa']
     idFuncionario = request.form['txtIdFuncionario']
@@ -171,11 +171,11 @@ def atualizaFuncionario():
     DAOendereco = EnderecoDAO()
     DAOtelefone = TelefoneDAO()
 
-    DAOusuario.atualiza(login, senha, idUser)
-    DAOpessoa.atualiza(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
-    DAOfuncionario.atualiza(cargo, salario, idFuncionario)
-    DAOendereco.atualiza(rua, numero, bairro, cidade, estado, cep, idEndereco)
-    DAOtelefone.atualiza(telefone, tipo, ddd, idTelefone)
+    DAOusuario.altera(login, senha, idUser)
+    DAOpessoa.altera(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
+    DAOfuncionario.altera(cargo, salario, idFuncionario)
+    DAOendereco.altera(rua, numero, bairro, cidade, estado, cep, idEndereco)
+    DAOtelefone.altera(telefone, tipo, ddd, idTelefone)
 
     retorno = DAOfuncionario.listar()
     return render_template('listaFuncionario.html', var=retorno)
@@ -253,8 +253,8 @@ def visualizaDentista():
     return render_template('visualizaDentista.html', var = retorno)
 
 
-@app.route("/atualizaDentista", methods=['POST'])
-def atualizaDentista():
+@app.route("/alteraDentista", methods=['POST'])
+def alteraDentista():
     idUser = request.form['txtIdUsuario']
     idPes = request.form['txtIdPessoa']
     idDentista = request.form['txtIdDentista']
@@ -293,11 +293,11 @@ def atualizaDentista():
     DAOendereco = EnderecoDAO()
     DAOtelefone = TelefoneDAO()
 
-    DAOusuario.atualiza(login, senha, idUser)
-    DAOpessoa.atualiza(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
-    DAOdentista.atualiza(cro, idEspecialidade, idDentista)
-    DAOendereco.atualiza(rua, numero, bairro, cidade, estado, cep, idEndereco)
-    DAOtelefone.atualiza(telefone, tipo, ddd, idTelefone)
+    DAOusuario.altera(login, senha, idUser)
+    DAOpessoa.altera(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
+    DAOdentista.altera(cro, idEspecialidade, idDentista)
+    DAOendereco.altera(rua, numero, bairro, cidade, estado, cep, idEndereco)
+    DAOtelefone.altera(telefone, tipo, ddd, idTelefone)
 
     retorno = DAOdentista.listar()
     return render_template('listaDentistas.html', var=retorno)
@@ -365,8 +365,8 @@ def visualizaPaciente():
     return render_template('visualizaPaciente.html', var = retorno)
 
 
-@app.route("/atualizaPaciente", methods=['POST'])
-def atualizaPaciente():
+@app.route("/alteraPaciente", methods=['POST'])
+def alteraPaciente():
     idPes = request.form['txtIdPessoa']
     idResponsavel = request.form['txtIdResponsavel']
     idPaciente = request.form['txtIdPaciente']
@@ -398,10 +398,10 @@ def atualizaPaciente():
     DAOendereco = EnderecoDAO()
     DAOtelefone = TelefoneDAO()
 
-    DAOpessoa.atualiza(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
-    DAOpaciente.atualiza(idResponsavel, idPaciente)
-    DAOendereco.atualiza(rua, numero, bairro, cidade, estado, cep, idEndereco)
-    DAOtelefone.atualiza(telefone, tipo, ddd, idTelefone)
+    DAOpessoa.altera(nome, sobrenome, rg, cpf, sexo, dtnascimento, email, idPes)
+    DAOpaciente.altera(idResponsavel, idPaciente)
+    DAOendereco.altera(rua, numero, bairro, cidade, estado, cep, idEndereco)
+    DAOtelefone.altera(telefone, tipo, ddd, idTelefone)
 
     retorno = DAOpaciente.listar()
     return render_template('listaPacientes.html', var=retorno)
@@ -666,9 +666,47 @@ def salvaHorarioConsulta():
     daopaciente = PacienteDAO()
     idPaciente = daopaciente.buscaCpf(cpf_paciente)
 
-    daohorario_paciente.salvar(idPaciente, idHorarioDentista, horario_inicio, horario_fim, valor)
+    # eese paciente já esta no mesmo horario em outra cadeira?
+    horario = daohorario_paciente.buscaHorarioPaciente(idPaciente, horario_inicio)
+    print(horario)
+    if horario == 0:
+        daohorario_paciente.salvar(idPaciente, idHorarioDentista, horario_inicio, horario_fim, valor)
+    else:
+        return "paciente já possue uma consulta neste horario!"
+
     # volta pro calendario
     return "oi"
+    #render_template('calendario.html', horariosDe=MatrixDentista, data=data, time=time, horarios=Matrix)
+
+
+@app.route("/alteraHorarioConsulta", methods=['POST'])
+def alteraHorarioConsulta():
+    print('veio')
+    valor = request.form['txtValorAltera']
+    print('valor' + valor)
+    id = request.form['txtIdHorarioConsulta']
+    print('id ' + id)
+    cpf_paciente = request.form['txtCpfAltera']
+    print('cpf_paciente ' + cpf_paciente)
+    data_horario = request.form['txtHorarioAlterar']
+    print('data_horario ' + data_horario)
+
+    comando = request.form['btnComando']
+
+    daohorario_paciente = HorarioPacienteDAO()
+    daopaciente = PacienteDAO()
+    idPaciente = daopaciente.buscaCpf(cpf_paciente)
+    '''
+    # eese paciente já esta no mesmo horario em outra cadeira?
+    horario = daohorario_paciente.buscaHorarioPaciente(idPaciente, data_horario)
+    print(horario)
+    if horario == 0:'''
+    daohorario_paciente.altera(id, idPaciente, valor)
+    '''else:
+        return "paciente já possue uma consulta neste horario!"'''
+
+    # volta pro calendario
+    return "oi de novo"
     #render_template('calendario.html', horariosDe=MatrixDentista, data=data, time=time, horarios=Matrix)
 
 

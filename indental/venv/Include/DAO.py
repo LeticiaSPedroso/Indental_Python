@@ -10,11 +10,7 @@ class AbstractDAO(metaclass=abc.ABCMeta):
     def getConexao(self):
         self.url = 'localhost'
         self.usuario = 'root'
-<<<<<<< HEAD
         self.password = 'pitbul12'
-=======
-        self.password = 'admin'
->>>>>>> f6e461f173d1c126231bbf308f18d97eb6a6a855
         self.base = 'indentalbd'
 
         return MySQLdb.connect(host=self.url, user=self.usuario, password=self.password, db=self.base)
@@ -41,7 +37,7 @@ class TelefoneDAO(AbstractDAO):
         #data = cursor.fetchone()
         return # retorno;
 
-    def atualiza(self, telefone, tipo, ddd, id):
+    def altera(self, telefone, tipo, ddd, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute("update " + self.base + "." + self.tabela + " set "
@@ -76,7 +72,7 @@ class UsuarioDAO:
         cursor.close()
         return str(id)
 
-    def atualiza(self, login, senha, id):
+    def altera(self, login, senha, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute("update " + self.base + "." + self.tabela + " set login = '"+login+"', senha = '"+senha+"'" +
@@ -114,7 +110,7 @@ class PessoaDAO:
         cursor.close()
         return str(id)
 
-    def atualiza(self, nome, sobrenome, rg, cpf, sexo, dtnascimento, email, id):
+    def altera(self, nome, sobrenome, rg, cpf, sexo, dtnascimento, email, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute("update " + self.base + "." + self.tabela + " set nome = '"+nome+"', sobrenome = '"+sobrenome+"', " +
@@ -163,7 +159,7 @@ class FuncionarioDAO:
                            "values(" + idPessoa + ", " + salario + ", '" + cargo + "', " + idUsuario +")")
             return
 
-        def atualiza(self, cargo, salario, id):
+        def altera(self, cargo, salario, id):
             db = AbstractDAO.getConexao(self)
             cursor = db.cursor()
             cursor.execute("update " + self.base + "." + self.tabela + " set salario = " + salario + ", cargo = '" + cargo +
@@ -192,7 +188,7 @@ class EnderecoDAO:
                        str(IdPessoa)+")")
         return
 
-    def atualiza(self, rua, numero, bairro, cidade, estado, cep, id):
+    def altera(self, rua, numero, bairro, cidade, estado, cep, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute("update " + self.base + "." + self.tabela + " set cep = '"+cep+"', numero = '"+numero+"', rua = '"+rua+"', " +
@@ -248,7 +244,7 @@ class DentistaDAO:
                        "values('" + cro + "', " + idPessoa + ", " + idUsuario + ", " + idEspecialidade + ")")
         return
 
-    def atualiza(self, cro, idEspecialidade, id):
+    def altera(self, cro, idEspecialidade, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute(
@@ -280,7 +276,7 @@ class EspecialidadeDAO:
         cursor.close()
         return str(id)
 
-    def atualiza(self, nome, valor, status, id):
+    def altera(self, nome, valor, status, id):
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute(
@@ -335,8 +331,8 @@ class PacienteDAO:
         cursor.close()
         return str(id)
 
-    def atualiza(self, idResponsavel, id):
-        #vai atualizar?
+    def altera(self, idResponsavel, id):
+        #vai alterar?
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute(
@@ -374,8 +370,8 @@ class ProcedimentoDAO:
         cursor.close()
         return
 
-    def atualiza(self, descricao, idTratamento, id):
-        #vai atualizar?
+    def altera(self, descricao, idTratamento, id):
+        #vai alterar?
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute(
@@ -416,8 +412,8 @@ class TratamentoDAO:
         cursor.close()
         return str(id)
 
-    def atualiza(self, descricao, idTratamento, id):
-        #vai atualizar?
+    def altera(self, descricao, idTratamento, id):
+        #vai alterar?
         db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
         cursor.execute(
@@ -457,11 +453,13 @@ class HorarioPacienteDAO:
         data = cursor.fetchall()
         return data
 
-    def busca(self):
-        db = MySQLdb.connect(host='localhost', user=self.usuario, password=self.password , db='indentalbd')
+    def buscaHorarioPaciente(self, idPaciente, horarioInicio):
+        db = AbstractDAO.getConexao(self)
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM indentalbd.horario_paciente")
-        data = cursor.fetchall()
+        cursor.execute("SELECT * FROM indentalbd.horario_paciente" +
+                       " where idPaciente = " + str(idPaciente) + " and " +
+                       "dataHorarioInicio = STR_TO_DATE('" + str(horarioInicio) + "', '%d/%m/%Y %H:%i:%s')")
+        data = cursor.rowcount
         return data
 
     def salvar(self, idPaciente, idHorarioDentista, dataHorarioInicio, dataHorarioFim, valor):
@@ -472,6 +470,15 @@ class HorarioPacienteDAO:
                        "values (null, " + str(idPaciente) + ", " + str(idHorarioDentista) + ", " +
                        "STR_TO_DATE('" + str(dataHorarioInicio) + "', '%d/%m/%Y %H:%i:%s'), " +
                        "STR_TO_DATE('" + str(dataHorarioFim) + "', '%d/%m/%Y %H:%i:%s'), " + str(valor) + ", 0)")
+        cursor.close()
+        return
+
+    def altera(self, id, idPaciente, valor):
+        db = AbstractDAO.getConexao(self)
+        cursor = db.cursor()
+        cursor.execute("update indentalbd.horario_paciente set idPaciente = '" + str(idPaciente) +
+                       "', valor = " + str(valor) +
+                       " where id = '" + str(id) + "'")
         cursor.close()
         return
 
