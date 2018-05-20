@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pagamento</title>
+	<link rel="stylesheet" href= "{{ url_for('static',filename='css/style.css') }}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script>
+        function realizar_pagamento()
+        {
+            $("#myModalPagar").modal();
+        }
+
+        function nao_pagamento()
+        {
+            $("#myModalNaoPagar").modal();
+        }
+    </script>
+</head>
+<body>
+    <h4>Consulta dia: {{ horario[14] }} as {{ horario[15] }}</h4>
+    <h4>Cadeira: {{ horario[13] }}</h4>
+    <form action="pagarConsulta" method="POST" onsubmit="return verifica()">
+        <h4>Dentista: {{ horario[9] }} {{ horario[10] }}</h4>
+        <h4>Paciente: {{ horario[11] }} {{ horario[12] }}</h4>
+        <h4>Valor: {{ horario[5] }}</h4>
+        {% if {{ horario[8] == 3 }}%}
+            <input type="button" onclick="realizar_pagamento()" value="PAGAMENTO">
+        {% endif %}
+        {% if {{ horario[8] != 3 }}%}
+            <input type="button" onclick="realizar_pagamento()" value="REALIZAR PAGAMENTO">
+            <input type="button" onclick="nao_pagamento()" value="PAGAMENTO NÃO REALIZADO">
+        {% endif %}
+    </form>
+</body>
+</html>
+<!-- Modal Salvar Pagamento -->
+<div class="modal fade" id="myModalPagar" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<form action="/salvaPagamentoConsulta" method="POST">
+				<div class="modal-body">
+					<p>Pagamento consulta</p>
+                    <input type="hidden" value="{{ horario[0] }}" id="txtIdHorarioConsulta" name="txtIdHorarioConsulta">
+                    <select id="txtModoPagamento" name="txtModoPagamento">
+                        <option value="A VISTA">A Vista</option>
+                        <option value="DEBITO 1">Débito 1 parcela</option>
+                        <option value="DEBITO 2">Débito 2 parcelas</option>
+                        <option value="DEBITO 3">Débito 3 parcelas</option>
+                    </select>
+                    <input type="hidden" value="" id="txtStatusPagamento" name="txtStatusPagamento">
+					<button type="submit" id="btnComando" name="btnComando" value="PAGOU">
+                            SALVAR
+                    </button>
+                </div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Modal Nao Salvar Pagamento -->
+<div class="modal fade" id="myModalNaoPagar" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<form action="/salvaPagamentoConsulta" method="POST">
+				<div class="modal-body">
+					<p>Paciente não pagou a consulta?</p>
+                    <input type="hidden" value="{{ horario[0] }}" id="txtIdHorarioConsulta" name="txtIdHorarioConsulta">
+                    <input type="hidden" value="1" id="txtStatusPagamento" name="txtStatusPagamento">
+					<button type="submit" id="btnComando" name="btnComando" value="NAO_PAGOU">
+                            SALVAR
+                    </button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- Modal Continuar Pagamento -->
+<div class="modal fade" id="myModalNaoPagar" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<form action="/salvaPagamentoConsulta" method="POST">
+				<div class="modal-body">
+					<p>Paciente não pagou a consulta?</p>
+                    <input type="hidden" value="{{ horario[0] }}" id="txtIdHorarioConsulta" name="txtIdHorarioConsulta">
+                    <input type="hidden" value="1" id="txtStatusPagamento" name="txtStatusPagamento">
+					<button type="submit" id="btnComando" name="btnComando" value="NAO_PAGOU">
+                            SALVAR
+                    </button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

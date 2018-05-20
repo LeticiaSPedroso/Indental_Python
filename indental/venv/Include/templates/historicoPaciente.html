@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>historico paciente</title>
+    <script>
+        function insertId(id)
+        {
+            document.getElementById('txtIdPaciente').value = id
+        }
+    </script>
+</head>
+<body>
+    <form action="/alteraHorarioConsulta" method="POST">
+        <p>Paciente: {{ var[1][18] }} {{ var[1][19] }} </p>
+        <p>RG: {{ var[1][22] }} </p>
+        <p>CPF: {{ var[1][23] }} </p>
+        <table border = 1>
+            <tr>
+                <th> DATA CONSULTA </th>
+                <th> DENTISTA </th>
+                <th> VALOR </th>
+                <th> COMPARECIMENTO </th>
+                <th> PAGAMENTO </th>
+            </tr>
+            {% for value in var %}
+                <tr>
+                    <td> {{ value[9] }} </td>
+                    <td> {{ value[13] }} {{ value[14] }} </td>
+                    <td> {{ value[5] }} </td>
+                    <td>
+                        {% if value[7] == 0 %}
+                            <input type="hidden" id="txtIdHorarioConsulta" name="txtIdHorarioConsulta" value="{{ value[0] }}">
+                            <input type="submit" name="btnComando" value="NAO COMPARECEU"
+                                   onclick="insertId({{ value[0] }})">
+                            <input type="submit" id="txtComando" name="btnComando" value="COMPARECEU"
+                                   onclick="insertId({{ value[0] }})">
+                        {% endif %}
+                        {% if value[7] == 1 %}
+                            <h5>NÃO COMPARECEU</h5>
+                        {% endif %}
+                        {% if value[7] == 2 %}
+                            <h5>COMPARECEU</h5>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if value[8] == 3 %}
+                            <input type="hidden" id="txtIdHorarioConsulta" name="txtIdHorarioConsulta" value="{{ value[0] }}">
+                            <input type="submit" name="btnComando" value="PAGAMENTO INCOMPLETO"
+                                   onclick="insertId({{ value[0] }})">
+                        {% endif %}
+                        {% if value[8] == 1 %}
+                            <h5>NÃO PAGOU</h5>
+                        {% endif %}
+                        {% if value[8] == 2 %}
+                            <h5>PAGAMENTO COMPLETO</h5>
+                        {% endif %}
+                        {% if value[8] == 0 %}
+                            <h5> </h5>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>

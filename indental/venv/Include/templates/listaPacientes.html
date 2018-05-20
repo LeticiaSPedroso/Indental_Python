@@ -19,6 +19,7 @@
                 <th> SOBRENOME </th>
                 <th> CPF </th>
                 <th> VISUALIZAR </th>
+                <th> HISTORICO </th>
             </tr>
             {% for value in var %}
                 <tr>
@@ -28,7 +29,11 @@
                     <td> {{ value[12] }} </td>
                     <td>
                         <input type="hidden" id="txtIdPaciente" name="txtIdPaciente" value="{{ value[0] }}">
-                        <input type="submit" id="txtComando" name="txtComando" value="VISUALIZAR"
+                        <input type="submit" id="txtComando" name="btnComando" value="VISUALIZAR"
+                               onclick="insertId({{ value[0] }})">
+                    </td>
+                    <td>
+                        <input type="submit" id="btnComando" name="btnComando" value="HISTORICO"
                                onclick="insertId({{ value[0] }})">
                     </td>
                 </tr>

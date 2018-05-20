@@ -356,13 +356,19 @@ def insertPaciente():
     return render_template('listaPacientes.html', var=retorno)
 
 
-
 @app.route("/visualizaPaciente", methods=['POST'])
 def visualizaPaciente():
     DAOpaciente = PacienteDAO()
+    daohorario_paciente = HorarioPacienteDAO()
     id = request.form['txtIdPaciente']
-    retorno = DAOpaciente.busca(id)
-    return render_template('visualizaPaciente.html', var = retorno)
+    comando = request.form['btnComando']
+
+    if comando == "VISUALIZAR":
+        retorno = DAOpaciente.busca(id)
+        return render_template('visualizaPaciente.html', var=retorno)
+    elif comando == "HISTORICO":
+        retorno = daohorario_paciente.lista("", "", id)
+        return render_template('historicoPaciente.html', var=retorno)
 
 
 @app.route("/alteraPaciente", methods=['POST'])
@@ -579,7 +585,7 @@ def agendaConsulta():
 
     while cadeira_num <= 5:
         daohorario_paciente = HorarioPacienteDAO()
-        horarios = daohorario_paciente.lista(data, cadeira_num)
+        horarios = daohorario_paciente.lista(data, cadeira_num, "")
         #w, h, d = 500, 500, 500;
         #Matrix = [[0 for x in range(w)] for y in range(h) for y in range(d)]
         inicio = 0
@@ -592,11 +598,11 @@ def agendaConsulta():
             houveMudanca = 0
             for h in horarios:
                 #iniciou o algum com esse tempo?
-                if (h[8] == time[i]):
+                if (h[10] == time[i]):
                     houveMudanca = 1
 
                     i = time.index(time[i])
-                    while h[10] != time[i]:
+                    while h[12] != time[i]:
                         Matrix[cadeira_num, i, 0] = str(time[i])
                         Matrix[cadeira_num, i, 1] = h
                         print(Matrix[cadeira_num, i, 0])
@@ -667,7 +673,7 @@ def salvaHorarioConsulta():
     idPaciente = daopaciente.buscaCpf(cpf_paciente)
 
     # eese paciente já esta no mesmo horario em outra cadeira?
-    horario = daohorario_paciente.buscaHorarioPaciente(idPaciente, horario_inicio)
+    horario = daohorario_paciente.busca(idPaciente, horario_inicio, "")
     print(horario)
     if horario == 0:
         daohorario_paciente.salvar(idPaciente, idHorarioDentista, horario_inicio, horario_fim, valor)
@@ -681,27 +687,36 @@ def salvaHorarioConsulta():
 
 @app.route("/alteraHorarioConsulta", methods=['POST'])
 def alteraHorarioConsulta():
-    print('veio')
-    valor = request.form['txtValorAltera']
-    print('valor' + valor)
-    id = request.form['txtIdHorarioConsulta']
-    print('id ' + id)
-    cpf_paciente = request.form['txtCpfAltera']
-    print('cpf_paciente ' + cpf_paciente)
-    data_horario = request.form['txtHorarioAlterar']
-    print('data_horario ' + data_horario)
+    daohorario_paciente = HorarioPacienteDAO()
+    daopaciente = PacienteDAO()
 
     comando = request.form['btnComando']
 
-    daohorario_paciente = HorarioPacienteDAO()
-    daopaciente = PacienteDAO()
+    id = request.form['txtIdHorarioConsulta']
+
+    if comando == "COMPARECEU":
+        daohorario_paciente.altera(id, "", "", 2, "")
+        horario = daohorario_paciente.busca("", "", id)
+        return render_template('pagamentoConsulta.html', horario=horario)
+    elif comando == "NAO COMPARECEU":
+        daohorario_paciente.altera(id, "", "", 1, "")
+        return render_template('calendarioConsulta.html')
+    elif comando == "PAGAMENTO INCOMPLETO":
+        horario = daohorario_paciente.busca("", "", id)
+        return render_template('pagamentoConsulta.html', horario=horario)
+
+    valor = request.form['txtValorAltera']
+    cpf_paciente = request.form['txtCpfAltera']
+    data_horario = request.form['txtHorarioAlterar']
+
     idPaciente = daopaciente.buscaCpf(cpf_paciente)
     '''
     # eese paciente já esta no mesmo horario em outra cadeira?
     horario = daohorario_paciente.buscaHorarioPaciente(idPaciente, data_horario)
     print(horario)
     if horario == 0:'''
-    daohorario_paciente.altera(id, idPaciente, valor)
+
+    daohorario_paciente.altera(id, idPaciente, valor, "", "")
     '''else:
         return "paciente já possue uma consulta neste horario!"'''
 
@@ -710,7 +725,39 @@ def alteraHorarioConsulta():
     #render_template('calendario.html', horariosDe=MatrixDentista, data=data, time=time, horarios=Matrix)
 
 
-app.secret_key = os.urandom(12)
+@app.route("/deletaHorarioConsulta", methods=['POST'])
+def deletaHorarioConsulta():
+    id = request.form['txtIdHorarioExcluir']
+
+    comando = request.form['btnComando']
+
+    daohorario_paciente = HorarioPacienteDAO()
+    daohorario_paciente.deleta(id)
+
+    # volta pro calendario
+    return render_template('calendarioConsulta.html')
+
+
+@app.route("/salvaPagamentoConsulta", methods=['POST'])
+def salvaPagamentoConsulta():
+    daohorario_paciente = HorarioPacienteDAO()
+
+    pagou = request.form['txtStatusPagamento']
+    id = request.form['txtIdHorarioConsulta']
+
+    comando = request.form['btnComando']
+
+    if comando == "PAGOU":
+        tipo = request.form['txtModoPagamento']
+        if tipo == 'A VISTA' or tipo == 'DEBITO 1':
+            daohorario_paciente.altera(id, "", "", "", 2)
+        else:
+            daohorario_paciente.altera(id, "", "", "", 3)
+    else:
+        daohorario_paciente.altera(id, "", "",  "", pagou)
+
+    # volta pro calendario
+    return render_template('listaPacientes.html')
 
 
 app.run(port=4996)
